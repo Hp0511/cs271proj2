@@ -1,8 +1,8 @@
 //==============================================================
 // Names: Huy Phan, Andrew Nguyen, Tri Dang
 // Class: CS 271
-// Project: Binary Search Tree Operations
-// Date: 10/13/2024
+// Project: 2
+// Date: 11/3/2024
 //==============================================================
 #include <iostream>
 using namespace std;
