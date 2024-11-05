@@ -31,3 +31,45 @@ void RBTree<T>::transplant(RBTreeNode<T>* oldNode, RBTreeNode<T>* newNode) {
             newNode->parent = oldNode->parent;
 }
 
+
+// Left Rotation
+// Tri Dang
+template <typename T>
+void RBTree<T>::leftRotation(RBTreeNode<T>* centerNode) {
+    RBTreeNode<T>* sideNode = centerNode->right;
+    centerNode->right = sideNode->left;
+    if (sideNode->left != nullptr){
+        sideNode->left->parent = centerNode;
+    }
+    sideNode->parent = centerNode->parent;
+    if (centerNode->parent == nullptr){
+        root = sideNode; // remember to fix this
+    } else if(centerNode == centerNode->parent->left){
+        centerNode->parent->left = sideNode;
+    } else{
+        centerNode->parent->right = sideNode;
+    }
+    sideNode->left = centerNode;
+    centerNode->parent = sideNode;
+}
+
+// Right Rotation:
+// Tri Dang
+template<typename T>
+void RBTree<T>::rightRotation(RBTreeNode<T>* centerNode) {
+    RBTreeNode<T>* sideNode = centerNode->left;
+    centerNode->left = sideNode->right;
+    if (sideNode->right != nullptr){
+        sideNode->right->parent = centerNode;
+    }
+    sideNode->parent = centerNode->parent;
+    if (centerNode->parent == nullptr){
+        root = sideNode; // remember to fix this
+    } else if(centerNode == centerNode->parent->right){
+        centerNode->parent->right = sideNode;
+    } else{
+        centerNode->parent->left = sideNode;
+    }
+    sideNode->right = centerNode;
+    centerNode->parent = sideNode;
+}
