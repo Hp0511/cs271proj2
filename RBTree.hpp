@@ -10,6 +10,8 @@ private:
     RBTreeNode<T>* root;
 
     void        transplant(RBTreeNode<T>* oldNode, RBTreeNode<T>* newNode);
+    void        leftRotation(RBTreeNode<T>* centerNode); // NOT part of assignment (helper function)
+    void        rightRotation(RBTreeNode<T>* centerNode); // NOT part of assignment (helper function)
     void        insertFixup(RBTreeNode<T>* node);
     void        removeFixup(RBTreeNode<T>* node);
     void        printPreOrderTraversal(RBTreeNode<T>* node)     const;
