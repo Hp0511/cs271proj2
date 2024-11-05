@@ -13,21 +13,20 @@ using namespace std;
 template<typename T>
 class BSTNode {
 public:
-    T		value;
-	BSTNode 	*left;
-    BSTNode    *right;
-    
     BSTNode<T>    ( void );
     BSTNode<T>    ( const BSTNode<T> &bstNode );
     ~BSTNode<T>   ( void );
     BSTNode<T>& operator=(const BSTNode<T>& bstNode);
+    
     BSTNode<T>* treeMin();
     BSTNode<T>* treeMax();
     void printPreOrderTraversal() const;
     void printInOrderTraversal() const;
     void printPostOrderTraversal() const;
 
-	
+	T		value;
+	BSTNode 	*left;
+    BSTNode    *right;
 };
 
 #endif
