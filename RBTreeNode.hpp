@@ -7,16 +7,22 @@ using namespace std;
 template<typename T>
 class RBTreeNode {
 public:
-    T data; 
-    RBTreeNode<T>* left;
-    RBTreeNode<T>* right;
-    bool color; // true for Red, false for Black
+    T data;                         
+    RBTreeNode* parent;       
+    RBTreeNode* left;              
+    RBTreeNode* right;              
+    bool color;                     
 
-    RBTreeNode<T>* treeMin();
-    RBTreeNode<T>* treeMax();
-    void printPreOrderTraversal() const;
-    void printInOrderTraversal() const;
-    void printPostOrderTraversal() const;
+    // Constructor to initialize a new node
+    RBTreeNode(T value, bool nodeColor = true)
+        : data(value), parent(nullptr), left(nullptr), right(nullptr), color(nodeColor) {}
+
+
+    RBTreeNode<T>*      treeMin();
+    RBTreeNode<T>*      treeMax();
+    void                printPreOrderTraversal()    const;
+    void                printInOrderTraversal()     const;
+    void                printPostOrderTraversal()   const;
 };
 
 #endif

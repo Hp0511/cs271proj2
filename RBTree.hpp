@@ -1,24 +1,37 @@
-#include <iostream>
+#ifndef RBTREE_HPP
+#define RBTREE_HPP
+
+#include "RBTreeNode.hpp"
 #include <stdexcept>
-using namespace std;
 
-#ifndef RBTREE_OPERATIONS_HPP
-#define RBTREE_OPERATIONS_HPP
+template <typename T>
+class RBTree {
+private:
+    RBTreeNode<T>* root;
 
-template<typename T>
-class RBTreeNode {
+    void        transplant(RBTreeNode<T>* oldNode, RBTreeNode<T>* newNode);
+    void        insertFixup(RBTreeNode<T>* node);
+    void        removeFixup(RBTreeNode<T>* node);
+    void        printPreOrderTraversal(RBTreeNode<T>* node)     const;
+    void        printInOrderTraversal(RBTreeNode<T>* node)      const;
+    void        printPostOrderTraversal(RBTreeNode<T>* node)    const;
+
 public:
+    // Constructor and destructor
+    RBTree();
+    ~RBTree();
 
-    void transplant(RBTreeNode<T>* u, RBTreeNode<T>* v);
-    bool isEmpty() const;
-    long size() const;
-    RBTreeNode<T>* insert(T value);
+    // Public methods
+    bool                isEmpty()       const;
+    long                size()          const;
+    RBTreeNode<T>*      insert(T value);
     void remove(T value);
-    RBTreeNode<T>* search(T value) const;
-    RBTreeNode<T>* treeMin() const;
-    RBTreeNode<T>* treeMax() const;
-    void printPreOrderTraversal() const;
-    void printInOrderTraversal() const;
-    void printPostOrderTraversal() const;
+    RBTreeNode<T>*      search(T value) const;
+    RBTreeNode<T>*      treeMin()       const;
+    RBTreeNode<T>*      treeMax()       const;
+    void        printPreOrderTraversal() const;
+    void        printInOrderTraversal() const;
+    void        printPostOrderTraversal() const;
 };
+
 #endif
