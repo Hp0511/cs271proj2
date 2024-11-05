@@ -19,6 +19,8 @@ bool RBTree<T>::isEmpty() const {
     return root == nullptr;
 }
 
+// Transplant - exchange locations of 2 nodes
+// Andrew
 template <typename T>
 void RBTree<T>::transplant(RBTreeNode<T>* oldNode, RBTreeNode<T>* newNode) {
     if (oldNode->parent == nullptr)
@@ -72,4 +74,41 @@ void RBTree<T>::rightRotation(RBTreeNode<T>* centerNode) {
     }
     sideNode->right = centerNode;
     centerNode->parent = sideNode;
+}
+
+// treeMin - find minimun value of tree
+// Andrew Nguyen
+template <typename T>
+RBTreeNode<T>* RBTree<T>::treeMin() const {
+    if root == nullptr {
+        return nullptr;
+    }
+    return root->treeMin()
+}   
+
+// treeMax- find maximun value of tree
+// Andrew
+template <typename T>
+RBTreeNode<T>* RBTree<T>::treeMax() const {
+    if root == nullptr {
+        return nullptr;
+    }
+    return root->treeMax()
+}
+
+// Search - return the pointer of the value being searched
+// Andrew
+template <typename T>
+RBTreeNode<T>* RBTree<T>::search(T value) const {
+    Node* node = root;
+    while (node != nullptr) {
+        if (node->value == value) {
+            return node;
+        } if (node->data <= value) {
+            node = node->right;
+        } else {
+            node = node->left;
+        }
+    }
+    return nullptr;
 }
