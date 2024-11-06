@@ -76,6 +76,85 @@ void RBTree<T>::rightRotation(RBTreeNode<T>* centerNode) {
     centerNode->parent = sideNode;
 }
 
+// Insertion
+// Tri Dang
+template<typename T>
+void RBTree<T>::insert(T value){
+    // creation of a new node
+    RBTreeNode<T>* newNode =  new RBtreeNode<T>();
+    newNode->data = value;
+    newNode->left = nullptr;
+    newNode->right = nullptr;
+    newNode->parent = nullptr;
+
+    RBTreeNode<T>* comparedNode = root;
+    RBTreeNode<T>* parentNode = nullptr;
+    while (comparedNode != nullptr){
+        parentNode = comparedNode;
+        if (newNode->data < comparedNode->data){
+            comparedNode = comparedNode->left;
+        } else{
+            comparedNode = comparedNode->right;
+        }
+        newNode->parent = parentNode;
+        if (parentNode == nullptr){
+            root = newNode;
+        } else if(newNode->data < parentNode->data){
+            parentNode->left = newNode;
+        } else{
+            parentNode->right = newNode;
+        }
+        newNode->left = nullptr;
+        newNode->right = nullptr;
+        newNode->color = true;
+    }
+    insertFixup(newNode); // is it this*?
+}
+
+// Fixing tree after insertion
+// Tri Dang
+template<typename T>
+void RBTree<T>::insertFixup(RBTreeNode<T>* newNode){
+    while(newNode->parent->color == True){
+        if (newNode->parent == newNode->parent->parent->left){ // Z's newNode grandparent a left child?
+            RBTreeNode<T>* uncle = newNode->parent->parent->right;
+            if (uncle->color == true){ // case 1
+                newNode->parent->color = false;
+                uncle->color = false;
+                newNode->parent->parent->color = true;
+                newNode = newNode->parent->parent;
+            } else{
+                if (newNode == newNode->parent->right){ // case 2
+                    newNode = newNode->parent;
+                    leftRotation(newNode->parent->parent);
+                }
+                // case 3
+                newNode->parent->color = false;
+                newNode->parent->parent->color = true;
+                rightRotation(newNode->parent->parent);
+            }
+        } else{ // newNode's grandparent MUST be a right child
+                RBTreeNode<T>* uncle = newNode->parent->parent->left;
+                if (uncle->color == true){ // case 1
+                    newNode->parent->color = false;
+                    uncle->color = false;
+                    newNode->parent->parent->color = true;
+                    newNode = newNode->parent->parent;
+                } else{
+                    if (newNode == newNode->parent->left){ // case 2
+                        newNode = newNode->parent;
+                        rightRotation(newNode);
+                    }
+                    // case 3
+                    newNode->parent->color = false;
+                    newNode->parent->parent->color = true;
+                    leftRotation(newNode->parent->parent);
+                }
+        }
+    root->color = false;
+    }
+}
+
 // treeMin - find minimun value of tree
 // Andrew Nguyen
 template <typename T>
