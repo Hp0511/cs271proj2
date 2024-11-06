@@ -8,13 +8,18 @@
 
 #include <iostream>
 #include "BSTNode.cpp"
+#include "BST.cpp"
 
 using namespace std;
 
 //==============================================================
+// BSTNODE TEST
+//==============================================================
+
+//==============================================================
 // Test the Default Constructor
 //==============================================================
-void test_default_constructor() {
+void bstnode_test_default_constructor() {
     BSTNode<int> root;
     cout << "Testing Default Constructor:" << endl;
     cout << "Root value: " << root.value << " (Expected: 0)" << endl;
@@ -25,9 +30,9 @@ void test_default_constructor() {
 }
 
 //==============================================================
-// Test Tree Building Manually
+// Test Tree Building 
 //==============================================================
-BSTNode<int>* build_tree() {
+BSTNode<int>* bstnode_build_tree() {
     BSTNode<int>* root = new BSTNode<int>();
     root->value = 10;
 
@@ -54,7 +59,7 @@ BSTNode<int>* build_tree() {
 //==============================================================
 // Test TreeMin Method
 //==============================================================
-void test_tree_min(BSTNode<int>* root) {
+void bstnode_test_tree_min(BSTNode<int>* root) {
     BSTNode<int>* minNode = root->treeMin();
     cout << "Testing treeMin():" << endl;
     if (minNode != nullptr) {
@@ -68,7 +73,7 @@ void test_tree_min(BSTNode<int>* root) {
 //==============================================================
 // Test TreeMax Method
 //==============================================================
-void test_tree_max(BSTNode<int>* root) {
+void bstnode_test_tree_max(BSTNode<int>* root) {
     BSTNode<int>* maxNode = root->treeMax();
     cout << "Testing treeMax():" << endl;
     if (maxNode != nullptr) {
@@ -82,7 +87,7 @@ void test_tree_max(BSTNode<int>* root) {
 //==============================================================
 // Test Pre-order Traversal
 //==============================================================
-void test_preorder_traversal(BSTNode<int>* root) {
+void bstnode_test_preorder_traversal(BSTNode<int>* root) {
     cout << "Testing Pre-order Traversal (Expected output: 10 5 2 7 15):" << endl;
     root->printPreOrderTraversal();
     cout << endl << "Pre-order Traversal test completed." << endl << endl;
@@ -91,7 +96,7 @@ void test_preorder_traversal(BSTNode<int>* root) {
 //==============================================================
 // Test In-order Traversal
 //==============================================================
-void test_inorder_traversal(BSTNode<int>* root) {
+void bstnode_test_inorder_traversal(BSTNode<int>* root) {
     cout << "Testing In-order Traversal (Expected output: 2 5 7 10 15):" << endl;
     root->printInOrderTraversal();
     cout << endl << "In-order Traversal test completed." << endl << endl;
@@ -100,7 +105,7 @@ void test_inorder_traversal(BSTNode<int>* root) {
 //==============================================================
 // Test Post-order Traversal
 //==============================================================
-void test_postorder_traversal(BSTNode<int>* root) {
+void bstnode_test_postorder_traversal(BSTNode<int>* root) {
     cout << "Testing Post-order Traversal (Expected output: 2 7 5 15 10):" << endl;
     root->printPostOrderTraversal();
     cout << endl << "Post-order Traversal test completed." << endl << endl;
@@ -109,7 +114,7 @@ void test_postorder_traversal(BSTNode<int>* root) {
 //==============================================================
 // Test Copy Constructor
 //==============================================================
-void test_copy_constructor(BSTNode<int>* root) {
+void bstnode_test_copy_constructor(BSTNode<int>* root) {
     BSTNode<int> copiedRoot(*root);
     cout << "Testing Copy Constructor (In-order Traversal of copied tree, Expected: 2 5 7 10 15):" << endl;
     copiedRoot.printInOrderTraversal();
@@ -127,7 +132,7 @@ void test_copy_constructor(BSTNode<int>* root) {
 //==============================================================
 // Test Assignment Operator
 //==============================================================
-void test_assignment_operator(BSTNode<int>* root) {
+void bstnode_test_assignment_operator(BSTNode<int>* root) {
     BSTNode<int> assignedNode;
     assignedNode = *root;
     cout << "Testing Assignment Operator (In-order Traversal of assigned tree, Expected: 2 5 7 10 15):" << endl;
@@ -146,47 +151,207 @@ void test_assignment_operator(BSTNode<int>* root) {
 //==============================================================
 // Test Self-assignment
 //==============================================================
-void test_self_assignment(BSTNode<int>* root) {
+void bstnode_test_self_assignment(BSTNode<int>* root) {
     cout << "Testing Self-assignment (In-order Traversal after self-assignment, Expected: 2 5 7 10 15):" << endl;
     *root = *root;  // Should not cause any changes
     root->printInOrderTraversal();
     cout << endl << "Self-assignment test completed." << endl << endl;
 }
 
+
+//==============================================================
+// BST TEST
+//==============================================================
+
+
+//==============================================================
+// Test the Default Constructor
+//==============================================================
+void bst_test_default_constructor() {
+    cout << "Testing Default Constructor:" << endl;
+    BST<int> bst;
+    cout << "Is tree empty? " << (bst.isEmpty() ? "Yes" : "No") << " (Expected: Yes)" << endl;
+    cout << "Size of tree: " << bst.size() << " (Expected: 0)" << endl;
+    cout << "Default constructor test completed.\n" << endl;
+}
+
+//==============================================================
+// Test Insert Method
+//==============================================================
+void bst_test_insert() {
+    cout << "Testing Insert Method:" << endl;
+    BST<int> bst;
+    bst.insert(10);
+    bst.insert(5);
+    bst.insert(15);
+    bst.insert(3);
+    bst.insert(7);
+
+    cout << "Inserted values: 10, 5, 15, 3, 7" << endl;
+    cout << "Is tree empty? " << (bst.isEmpty() ? "Yes" : "No") << " (Expected: No)" << endl;
+    cout << "Size of tree: " << bst.size() << " (Expected: 5)" << endl;
+    cout << "Insert method test completed.\n" << endl;
+}
+
+//==============================================================
+// Test Search Method
+//==============================================================
+void bst_test_search() {
+    cout << "Testing Search Method:" << endl;
+    BST<int> bst;
+    bst.insert(10);
+    bst.insert(5);
+    bst.insert(15);
+
+    
+    BSTNode<int>* result = bst.search(5);
+    cout << "Found value: " << result->value << " (Expected: 5)" << endl;
+
+    cout << "Search method test completed.\n" << endl;
+}
+
+//==============================================================
+// Test Remove Method
+//==============================================================
+void bst_test_remove() {
+    cout << "Testing Remove Method:" << endl;
+    BST<int> bst;
+    bst.insert(20);
+    bst.insert(10);
+    bst.insert(30);
+    bst.insert(5);
+    bst.insert(15);
+    bst.insert(25);
+    bst.insert(35);
+
+    cout << "Original In-order Traversal (Expected: 5 10 15 20 25 30 35):\n";
+    bst.printInOrderTraversal();
+    cout << endl;
+
+    bst.remove(10);  // Node with two children
+    cout << "After removing 10 (Expected In-order: 5 15 20 25 30 35):\n";
+    bst.printInOrderTraversal();
+    cout << endl;
+
+    bst.remove(5);   // Leaf node
+    cout << "After removing 5 (Expected In-order: 15 20 25 30 35):\n";
+    bst.printInOrderTraversal();
+    cout << endl;
+
+    bst.remove(30);  // Node with one child
+    cout << "After removing 30 (Expected In-order: 15 20 25 35):\n";
+    bst.printInOrderTraversal();
+    cout << endl;
+
+    cout << "Remove method test completed.\n" << endl;
+}
+
+//==============================================================
+// Test Traversal Methods
+//==============================================================
+void bst_test_traversals() {
+    cout << "Testing Traversal Methods:" << endl;
+    BST<int> bst;
+    bst.insert(20);
+    bst.insert(10);
+    bst.insert(30);
+    bst.insert(5);
+    bst.insert(15);
+    bst.insert(25);
+    bst.insert(35);
+
+    cout << "Pre-order Traversal (Expected: 20 10 5 15 30 25 35):\n";
+    bst.printPreOrderTraversal();
+    cout << endl;
+
+    cout << "In-order Traversal (Expected: 5 10 15 20 25 30 35):\n";
+    bst.printInOrderTraversal();
+    cout << endl;
+
+    cout << "Post-order Traversal (Expected: 5 15 10 25 35 30 20):\n";
+    bst.printPostOrderTraversal();
+    cout << endl;
+
+    cout << "Traversal methods test completed.\n" << endl;
+}
+
+//==============================================================
+// Test TreeMin and TreeMax Methods
+//==============================================================
+void bst_test_tree_min_max() {
+    cout << "Testing TreeMin and TreeMax Methods:" << endl;
+    BST<int> bst;
+    bst.insert(20);
+    bst.insert(10);
+    bst.insert(30);
+    bst.insert(5);
+    bst.insert(15);
+
+    // Test treeMin
+    BSTNode<int>* minNode = bst.treeMin();
+    if (minNode != nullptr) {
+        cout << "Minimum value in tree: " << minNode->value << " (Expected: 5)" << endl;
+    } else {
+        cout << "Minimum value in tree: Not found (Tree is empty)" << endl;
+    }
+
+    // Test treeMax
+    BSTNode<int>* maxNode = bst.treeMax();
+    if (maxNode != nullptr) {
+        cout << "Maximum value in tree: " << maxNode->value << " (Expected: 30)" << endl;
+    } else {
+        cout << "Maximum value in tree: Not found (Tree is empty)" << endl;
+    }
+
+    cout << "TreeMin and TreeMax methods test completed.\n" << endl;
+}
+
 //==============================================================
 // Main function to run all tests
 //==============================================================
 int main() {
+
+    cout<<"TESTING BSTNODE CLASS" <<endl<<endl;
     // Test default constructor
-    test_default_constructor();
+    bstnode_test_default_constructor();
 
     // Build the tree
-    BSTNode<int>* root = build_tree();
+    BSTNode<int>* root = bstnode_build_tree();
 
     // Test treeMin
-    test_tree_min(root);
+    bstnode_test_tree_min(root);
 
     // Test treeMax
-    test_tree_max(root);
+    bstnode_test_tree_max(root);
 
     // Test Pre-order Traversal
-    test_preorder_traversal(root);
+    bstnode_test_preorder_traversal(root);
 
     // Test In-order Traversal
-    test_inorder_traversal(root);
+    bstnode_test_inorder_traversal(root);
 
     // Test Post-order Traversal
-    test_postorder_traversal(root);
+    bstnode_test_postorder_traversal(root);
 
     // Test Copy Constructor
-    test_copy_constructor(root);
+    bstnode_test_copy_constructor(root);
 
     // Test Assignment Operator
-    test_assignment_operator(root);
+    bstnode_test_assignment_operator(root);
 
     // Test Self-assignment
-    test_self_assignment(root);
+    bstnode_test_self_assignment(root);
 
-    cout << "All tests completed successfully." << endl;
+    cout << "All BSTNodes tests completed successfully." << endl;
+
+    cout<<"TESTING BST CLASS" <<endl<<endl;
+    bst_test_default_constructor();
+    bst_test_insert();
+    bst_test_search();
+    bst_test_remove();
+    bst_test_traversals();
+    bst_test_tree_min_max();
+
+    cout <<endl<<endl<< "All BST tests completed successfully." << endl;
     return 0;
 }

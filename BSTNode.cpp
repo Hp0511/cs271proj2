@@ -7,7 +7,6 @@
 #include <iostream>
 #include <stdlib.h>
 #include "BSTNode.hpp"
-#include <stdexcept>
 using namespace std;
 
 //==============================================================
@@ -22,7 +21,7 @@ using namespace std;
 // none. but create a new BST Node
 //==============================================================
 template <typename T>
-    BSTNode<T>::BSTNode    ( void )
+    BSTNode<T>::BSTNode( void )
 {
     value = T();
     parent = nullptr;
@@ -40,7 +39,7 @@ template <typename T>
 // RETURN VALUE: none
 //==============================================================
 template <typename T>
-    BSTNode<T>::BSTNode    ( const BSTNode<T> &bstNode )
+    BSTNode<T>::BSTNode( const BSTNode<T> &bstNode )
 {
     value = bstNode.value;
     parent = nullptr;
@@ -71,10 +70,8 @@ template <typename T>
 // return value: none
 //========================================================
 template <typename T>
-    BSTNode<T>::~BSTNode    ( void )
+    BSTNode<T>::~BSTNode( void )
 {
-    delete left;
-    delete right;
 }
 
 

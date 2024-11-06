@@ -6,10 +6,9 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include "BSTNode.hpp"
 #include "BST.hpp"
-#include "BSTNode.cpp"
 #include "customexceptions.hpp"
-#include <stdexcept>
 using namespace std;
 
 //==============================================================
@@ -27,7 +26,7 @@ template <typename T>
     BST<T>::BST    ( void )
 {
     root = nullptr;
-    size = 0;
+    nodeCount = 0;
 }
 
 
@@ -40,30 +39,37 @@ template <typename T>
 // RETURN VALUE: none
 //==============================================================
 template <typename T>
-    BST<T>    ( const BST<T> &bst )
+    BST<T>::BST    ( const BST<T> &bst )
 {
-    size = bst.size;
+    nodeCount = bst.nodeCount;
     root = nullptr;
     
     if (bst.root != nullptr) {
         root = new BSTNode<T>();
         *root = *(bst.root);      
-        size = bst.size;
+        nodeCount = bst.nodeCount;
     }
 }
 
-//========================================================
-// destructor
-// Huy Phan
-// deletesBST Node object, and all elements in nodes to
-// ensure memory leakage does not happen
-// parameters: none
-// return value: none
-//========================================================
 template <typename T>
-    BST<T>::~BST   ( void )
-{
-    delete root;
+void BST<T>::deleteSubTree(BSTNode<T>* node) {
+    if (node == nullptr) {
+        return; // Base case: If the node is null, do nothing.
+    }
+
+    // First, delete the left and right children.
+    deleteSubTree(node->left);
+    deleteSubTree(node->right);
+
+    // Then, delete the current node.
+    delete node;
+}
+
+// Destructor for BST that calls the helper function.
+template <typename T>
+BST<T>::~BST() {
+    deleteSubTree(root); // Delete all nodes starting from the root.
+    root = nullptr;      // Set root to nullptr to prevent dangling pointer issues.
 }
 
 
@@ -80,13 +86,13 @@ template <typename T>
         return *this;
     }
     delete root;
-    size = 0;
+    nodeCount = 0;
     root = nullptr;
     
     if (bst.root != nullptr) {
         root = new BSTNode<T>();
         *root = *(bst.root);      
-        size = bst.size;
+        nodeCount = bst.nodeCount;
     }
 
     return *this;
@@ -128,7 +134,7 @@ template <typename T>
 template <typename T>
     long BST<T>::size() const
 {
-    return size;
+    return nodeCount;
 }
 
 
@@ -141,7 +147,7 @@ template <typename T>
 template <typename T>
     bool BST<T>::isEmpty() const
 {
-    return size == 0;
+    return nodeCount == 0;
 }
 
 
@@ -158,35 +164,42 @@ BSTNode<T>* BST<T>::insert(T value) {
     newNode->value = value;
     newNode->left = nullptr;
     newNode->right = nullptr;
-    newNode->parent = nullptr;
 
     // If the tree is empty, the new node becomes the root
     if (root == nullptr) {
         root = newNode;
+        nodeCount++;
         return newNode;
     }
 
     // Traverse the tree to find the correct position for the new node
-    BSTNode<T>* ptr = root;
+    BSTNode<T>* parentPtr = nullptr; // Pointer to keep track of the parent of the new node
+    BSTNode<T>* currentPtr = root;
 
-    while (ptr != nullptr) {
-        newNode->parent = ptr;  // Keep track of the parent of the insertion point
+    while (currentPtr != nullptr) {
+        parentPtr = currentPtr;
 
-        if (value <= ptr->value) {
+        if (value <= currentPtr->value) {
             // Move to the left child
-            ptr = ptr->left;
+            currentPtr = currentPtr->left;
         } else {
             // Move to the right child
-            ptr = ptr->right;
+            currentPtr = currentPtr->right;
         }
     }
 
+    // Set the parent pointer of the new node
+    newNode->parent = parentPtr;
+
     // Insert the new node as a left or right child of its parent
-    if (value <= newNode->parent->value) {
-        newNode->parent->left = newNode;
+    if (value <= parentPtr->value) {
+        parentPtr->left = newNode;
     } else {
-        newNode->parent->right = newNode;
+        parentPtr->right = newNode;
     }
+
+    // Increment the count of nodes
+    nodeCount++;
 
     return newNode;
 }
@@ -199,8 +212,10 @@ BSTNode<T>* BST<T>::insert(T value) {
 // RETURN VALUE: none
 //==============================================================
 template <typename T>
-void BST<T>::remove(T value) {   
+void BST<T>::remove(T value) {
     BSTNode<T>* toDel = nullptr;
+    
+    // Try to find the node to be deleted; catch the exception if not found
     try {
         toDel = search(value);
     } catch (const ValueNotInTreeException& e) {
@@ -211,36 +226,39 @@ void BST<T>::remove(T value) {
     // Case 1: Node has no children (it's a leaf)
     if (toDel->left == nullptr && toDel->right == nullptr) {
         transplant(toDel, nullptr);
-        delete toDel;
     } 
     // Case 2: Node has only a right child
     else if (toDel->left == nullptr) {
         transplant(toDel, toDel->right);
-        delete toDel;
-    }
-    // Case 2: Node has only a left child
+    } 
+    // Case 3: Node has only a left child
     else if (toDel->right == nullptr) {
         transplant(toDel, toDel->left);
-        delete toDel;
     }
-    // Case 3: Node has two children
+    // Case 4: Node has two children
     else {
         BSTNode<T>* inOrdSuccess = toDel->right->treeMin();
-
+        
+        // If in-order successor is not the right child of the node to delete
         if (inOrdSuccess->parent != toDel) {
-            // Transplant in-order successor with its right child
             transplant(inOrdSuccess, inOrdSuccess->right);
-            // The in-order successor now replaces the node to be deleted
             inOrdSuccess->right = toDel->right;
-            inOrdSuccess->right->parent = inOrdSuccess;
+            if (inOrdSuccess->right != nullptr) {
+                inOrdSuccess->right->parent = inOrdSuccess;
+            }
         }
+        
         // Transplant the node to delete with the in-order successor
         transplant(toDel, inOrdSuccess);
         inOrdSuccess->left = toDel->left;
-        inOrdSuccess->left->parent = inOrdSuccess;
-
-        delete toDel;
+        if (inOrdSuccess->left != nullptr) {
+            inOrdSuccess->left->parent = inOrdSuccess;
+        }
     }
+    
+    // Decrease the node count
+    nodeCount--;
+    
 }
 
 
@@ -278,15 +296,20 @@ template <typename T>
 // RETURN VALUE: a pointer to the inserted node 
 //==============================================================
 template <typename T>
-    BSTNode<T>* BST<T>::treeMin() const
-{
-    if(root != nullptr){
-        root->treeMin();
+BSTNode<T>* BST<T>::treeMin() const {
+    if (root == nullptr) {
+        return nullptr;
     }
-    else{
-        throw EmptyTreeException();
+
+    BSTNode<T>* ptr = root;
+
+    while (ptr->left != nullptr) {
+        ptr = ptr->left;
     }
+
+    return ptr;
 }
+
 
 
 //==============================================================
@@ -296,14 +319,18 @@ template <typename T>
 // RETURN VALUE: a pointer to the inserted node 
 //==============================================================
 template <typename T>
-    BSTNode<T>* BST<T>::treeMax() const
-{
-    if(root != nullptr){
-        root -> treeMax();
+BSTNode<T>* BST<T>::treeMax() const {
+    if (root == nullptr) {
+        return nullptr;
     }
-    else{
-        throw EmptyTreeException();
+
+    BSTNode<T>* ptr = root;
+
+    while (ptr->right != nullptr) {
+        ptr = ptr->right;
     }
+
+    return ptr;
 }
 
 

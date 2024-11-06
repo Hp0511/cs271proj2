@@ -5,8 +5,6 @@
 // Date: 11/3/2024
 //==============================================================
 #include <iostream>
-#include <stdexcept>
-
 #include "BSTNode.hpp"
 using namespace std;
 
@@ -16,10 +14,11 @@ using namespace std;
 template<typename T>
 class BST {
 public:
-                BST<T>    ( void );
-                BST<T>    ( const BST<T> &bst );
-                ~BST<T>   ( void );
-    BST<T>& operator=(const BSTNode<T>& bst);
+    BST<T>    ( void );
+    BST<T>    ( const BST<T> &bst );
+    ~BST<T>   ( void );
+    void deleteSubTree(BSTNode<T>* node);
+    BST<T>& operator=(const BST<T>& bst);
 
     void        transplant(BSTNode<T>* oldNode, BSTNode<T>* newNode);
     bool        isEmpty() const;
@@ -35,6 +34,6 @@ public:
 
 private:
     BSTNode<T> *root;
-    long size;
+    long nodeCount;
 };
 #endif
