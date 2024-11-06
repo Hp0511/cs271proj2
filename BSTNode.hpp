@@ -25,6 +25,7 @@ public:
     void        printPostOrderTraversal() const;
 
 	T		    value;
+    BSTNode 	*parent;
 	BSTNode 	*left;
     BSTNode    *right;
 

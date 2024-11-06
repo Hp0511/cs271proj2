@@ -102,7 +102,20 @@ template <typename T>
 template <typename T>
     void BST<T>::transplant(BSTNode<T>* oldNode, BSTNode<T>* newNode)
 {
+    if (oldNode->parent == nullptr) {
+        root = newNode;
+    }
     
+    else if (oldNode == oldNode->parent->left) {
+        oldNode->parent->left = newNode;
+    }
+    
+    else {
+        oldNode->parent->right = newNode;
+    }
+    if (newNode != nullptr) {
+        newNode->parent = oldNode->parent;
+    }
 }
 
 
@@ -135,23 +148,29 @@ template <typename T>
 //==============================================================
 // Insert method
 // Huy Phan
-// PARAMETERS: list
-// RETURN VALUE: a pointer to the inserted node 
+// PARAMETERS: value - The value to be inserted into the BST
+// RETURN VALUE: a pointer to the inserted node
 //==============================================================
 template <typename T>
-    BSTNode<T>* BST<T>::insert(T value)
-{
-    newNode = new BSTNode<T>();
+BSTNode<T>* BST<T>::insert(T value) {
+    // Create the new node
+    BSTNode<T>* newNode = new BSTNode<T>();
     newNode->value = value;
     newNode->left = nullptr;
     newNode->right = nullptr;
+    newNode->parent = nullptr;
 
-    BSTNode<T> *ptr = root;
-    BSTNode<T>* parent = nullptr;
+    // If the tree is empty, the new node becomes the root
+    if (root == nullptr) {
+        root = newNode;
+        return newNode;
+    }
 
     // Traverse the tree to find the correct position for the new node
+    BSTNode<T>* ptr = root;
+
     while (ptr != nullptr) {
-        parent = ptr;
+        newNode->parent = ptr;  // Keep track of the parent of the insertion point
 
         if (value <= ptr->value) {
             // Move to the left child
@@ -162,12 +181,13 @@ template <typename T>
         }
     }
 
-    // Insert the new node at the appropriate position
-    if (value <= parent->value) {
-        parent->left = newNode;
+    // Insert the new node as a left or right child of its parent
+    if (value <= newNode->parent->value) {
+        newNode->parent->left = newNode;
     } else {
-        parent->right = newNode;
+        newNode->parent->right = newNode;
     }
+
     return newNode;
 }
 
@@ -175,17 +195,54 @@ template <typename T>
 //==============================================================
 // Remove method
 // Huy Phan
-// PARAMETERS: list
-// RETURN VALUE: a pointer to the inserted node 
+// PARAMETERS: value - The value to remove from the BST
+// RETURN VALUE: none
 //==============================================================
 template <typename T>
-    void BST<T>::remove(T value)
-{   
-    //Search for the node
-    toDel = root.search(value);
-    //Case 1: The node is a leaf:
+void BST<T>::remove(T value) {   
+    BSTNode<T>* toDel = nullptr;
+    try {
+        toDel = search(value);
+    } catch (const ValueNotInTreeException& e) {
+        cout << e.what() << endl;
+        return;
+    }
 
+    // Case 1: Node has no children (it's a leaf)
+    if (toDel->left == nullptr && toDel->right == nullptr) {
+        transplant(toDel, nullptr);
+        delete toDel;
+    } 
+    // Case 2: Node has only a right child
+    else if (toDel->left == nullptr) {
+        transplant(toDel, toDel->right);
+        delete toDel;
+    }
+    // Case 2: Node has only a left child
+    else if (toDel->right == nullptr) {
+        transplant(toDel, toDel->left);
+        delete toDel;
+    }
+    // Case 3: Node has two children
+    else {
+        BSTNode<T>* inOrdSuccess = toDel->right->treeMin();
+
+        if (inOrdSuccess->parent != toDel) {
+            // Transplant in-order successor with its right child
+            transplant(inOrdSuccess, inOrdSuccess->right);
+            // The in-order successor now replaces the node to be deleted
+            inOrdSuccess->right = toDel->right;
+            inOrdSuccess->right->parent = inOrdSuccess;
+        }
+        // Transplant the node to delete with the in-order successor
+        transplant(toDel, inOrdSuccess);
+        inOrdSuccess->left = toDel->left;
+        inOrdSuccess->left->parent = inOrdSuccess;
+
+        delete toDel;
+    }
 }
+
 
 
 //==============================================================
@@ -203,16 +260,15 @@ template <typename T>
             // Move to the left child
             ptr = ptr->left;
         } 
-        else if (value < ptr->value) {
+        else if (value > ptr->value) {
             // Move to the right child
             ptr = ptr->right;
         }
-        else if (value = ptr->value){
+        else {
             return ptr;
         }
     }
-    throw ValueNotInTreeException;
-    return;
+    throw ValueNotInTreeException();
 }
 
 

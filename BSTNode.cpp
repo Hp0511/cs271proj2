@@ -25,6 +25,7 @@ template <typename T>
     BSTNode<T>::BSTNode    ( void )
 {
     value = T();
+    parent = nullptr;
     left = nullptr;
     right = nullptr;
 }
@@ -42,9 +43,11 @@ template <typename T>
     BSTNode<T>::BSTNode    ( const BSTNode<T> &bstNode )
 {
     value = bstNode.value;
+    parent = nullptr;
     //Deep copy of the left subtree
     if (bstNode.left != nullptr) {
         left = new BSTNode<T>(*bstNode.left);
+        left -> parent = this;
     } else {
         left = nullptr;
     }
@@ -52,6 +55,7 @@ template <typename T>
     // Deep copy of the right subtree
     if (bstNode.right != nullptr) {
         right = new BSTNode<T>(*bstNode.right);
+        right -> parent = this;
     } else {
         right = nullptr;
     }
@@ -95,6 +99,7 @@ template <typename T>
     //Deep copy of the left subtree
     if (bstNode.left != nullptr) {
         left = new BSTNode<T>(*bstNode.left);
+        left -> parent = this;
     } else {
         left = nullptr;
     }
@@ -102,6 +107,7 @@ template <typename T>
     // Deep copy of the right subtree
     if (bstNode.right != nullptr) {
         right = new BSTNode<T>(*bstNode.right);
+        right -> parent = this;
     } else {
         right = nullptr;
     }

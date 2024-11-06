@@ -1,9 +1,9 @@
 //==============================================================
-// Names: Huy Phan, Aisha Berry, Max Bonsteel
+// Names: Huy Phan, 
 // Class: CS 271-01
 // Project: 2
 // Date: 9/20/2024
-// About: mytests.cpp contains the test cases of each method
+// About: mytests.cpp contains the test cases for each method in BSTNode
 //==============================================================
 
 #include <iostream>
@@ -20,6 +20,7 @@ void test_default_constructor() {
     cout << "Root value: " << root.value << " (Expected: 0)" << endl;
     cout << "Left pointer: " << root.left << " (Expected: nullptr)" << endl;
     cout << "Right pointer: " << root.right << " (Expected: nullptr)" << endl;
+    cout << "Parent pointer: " << root.parent << " (Expected: nullptr)" << endl;
     cout << "Default constructor test completed." << endl << endl;
 }
 
@@ -32,15 +33,19 @@ BSTNode<int>* build_tree() {
 
     root->left = new BSTNode<int>();
     root->left->value = 5;
+    root->left->parent = root;  // Set parent of the left child
 
     root->right = new BSTNode<int>();
     root->right->value = 15;
+    root->right->parent = root;  // Set parent of the right child
 
     root->left->left = new BSTNode<int>();
     root->left->left->value = 2;
+    root->left->left->parent = root->left;  // Set parent of the left-left child
 
     root->left->right = new BSTNode<int>();
     root->left->right->value = 7;
+    root->left->right->parent = root->left;  // Set parent of the left-right child
 
     cout << "Tree built successfully." << endl;
     return root;
@@ -109,6 +114,14 @@ void test_copy_constructor(BSTNode<int>* root) {
     cout << "Testing Copy Constructor (In-order Traversal of copied tree, Expected: 2 5 7 10 15):" << endl;
     copiedRoot.printInOrderTraversal();
     cout << endl << "Copy constructor test completed." << endl << endl;
+
+    // Check that parent pointers are set correctly
+    if (copiedRoot.left) {
+        cout << "Copied root's left child parent value: " << copiedRoot.left->parent->value << " (Expected: 10)" << endl;
+    }
+    if (copiedRoot.right) {
+        cout << "Copied root's right child parent value: " << copiedRoot.right->parent->value << " (Expected: 10)" << endl;
+    }
 }
 
 //==============================================================
@@ -120,6 +133,14 @@ void test_assignment_operator(BSTNode<int>* root) {
     cout << "Testing Assignment Operator (In-order Traversal of assigned tree, Expected: 2 5 7 10 15):" << endl;
     assignedNode.printInOrderTraversal();
     cout << endl << "Assignment operator test completed." << endl << endl;
+
+    // Check that parent pointers are set correctly
+    if (assignedNode.left) {
+        cout << "Assigned root's left child parent value: " << assignedNode.left->parent->value << " (Expected: 10)" << endl;
+    }
+    if (assignedNode.right) {
+        cout << "Assigned root's right child parent value: " << assignedNode.right->parent->value << " (Expected: 10)" << endl;
+    }
 }
 
 //==============================================================
@@ -130,18 +151,6 @@ void test_self_assignment(BSTNode<int>* root) {
     *root = *root;  // Should not cause any changes
     root->printInOrderTraversal();
     cout << endl << "Self-assignment test completed." << endl << endl;
-}
-
-//==============================================================
-// Clean Up Function
-//==============================================================
-void clean_up_tree(BSTNode<int>* root) {
-    delete root->left->left;    // Deletes node with value 2
-    delete root->left->right;   // Deletes node with value 7
-    delete root->left;          // Deletes node with value 5
-    delete root->right;         // Deletes node with value 15
-    delete root;                // Deletes the root node (value 10)
-    cout << "Tree cleaned up successfully." << endl;
 }
 
 //==============================================================
@@ -177,9 +186,6 @@ int main() {
 
     // Test Self-assignment
     test_self_assignment(root);
-
-    // Clean up tree
-    clean_up_tree(root);
 
     cout << "All tests completed successfully." << endl;
     return 0;
