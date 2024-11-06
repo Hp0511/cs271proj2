@@ -8,6 +8,7 @@ template <typename T>
 class RBTree {
 private:
     RBTreeNode<T>* root;
+    long size;
 
     void        transplant(RBTreeNode<T>* oldNode, RBTreeNode<T>* newNode);
     void        leftRotation(RBTreeNode<T>* centerNode); // NOT part of assignment (helper function)
