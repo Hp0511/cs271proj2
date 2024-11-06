@@ -96,18 +96,18 @@ void RBTree<T>::insert(T value){
         } else{
             comparedNode = comparedNode->right;
         }
-        newNode->parent = parentNode;
-        if (parentNode == nullptr){
-            root = newNode;
-        } else if(newNode->data < parentNode->data){
-            parentNode->left = newNode;
-        } else{
-            parentNode->right = newNode;
-        }
-        newNode->left = nullptr;
-        newNode->right = nullptr;
-        newNode->color = true;
     }
+    newNode->parent = parentNode;
+    if (parentNode == nullptr){
+        root = newNode;
+    } else if(newNode->data < parentNode->data){
+        parentNode->left = newNode;
+    } else{
+        parentNode->right = newNode;
+    }
+    newNode->left = nullptr;
+    newNode->right = nullptr;
+    newNode->color = true;
     insertFixup(newNode); // is it this*?
 }
 
