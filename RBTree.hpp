@@ -27,7 +27,7 @@ public:
     // destructor
     ~RBTree<T>          ();
     // operator = 
-    RBTree<T>&          operator=(const RBTree);
+    RBTree<T>&          operator=(const RBTree<T>& RbTree);
 
     // Public methods
     bool                isEmpty()       const;
