@@ -19,9 +19,15 @@ private:
     void        printPostOrderTraversal(RBTreeNode<T>* node)    const;
 
 public:
-    // Constructor and destructor
-    RBTree();
-    ~RBTree();
+    // The 4 default functions:
+    // default constructor
+    RBTree<T>           (void);
+    // copy constructor
+    RBTree<T>           ( const RBTree<T> &RBTree );
+    // destructor
+    ~RBTree<T>          ();
+    // operator = 
+    RBTree<T>&          operator=(const RBTree);
 
     // Public methods
     bool                isEmpty()       const;
