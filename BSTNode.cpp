@@ -118,7 +118,7 @@ template <typename T>
 template <typename T>
     BSTNode<T>* BSTNode<T>::treeMin()
 {
-    BSTNode<T>* ptr = this;
+    BSTNode<T> *ptr = this;
 
     while(ptr -> left != nullptr){
         ptr = ptr-> left;
