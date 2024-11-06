@@ -5,7 +5,10 @@ using namespace std;
 
 // Constructor
 template <typename T>
-RBTree<T>::RBTree() : root(nullptr) {}
+RBTree<T>::RBTree(){
+    root = nullptr;
+    size = 0;
+}
 
 // Destructor (use a recursive function to delete nodes)
 template <typename T>
@@ -109,6 +112,7 @@ void RBTree<T>::insert(T value){
     newNode->right = nullptr;
     newNode->color = true;
     insertFixup(newNode); // is it this*?
+    size++;
 }
 
 // Fixing tree after insertion
@@ -190,4 +194,11 @@ RBTreeNode<T>* RBTree<T>::search(T value) const {
         }
     }
     return nullptr;
+}
+
+// Size function
+// Tri dang
+template <typename T>
+long RBTree<T>::size() const{
+    return (size);
 }
