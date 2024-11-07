@@ -49,7 +49,7 @@ RBTree<T>::~RBTree() {
     root = nullptr; 
 }
 
-// Assignmetn operator
+// Assignment operator
 template <typename T>
 RBTree<T>& RBTree<T>::operator=(const RBTree<T>& RBTree) {
     if (this == &RBTree){
@@ -138,9 +138,6 @@ RBTreeNode<T>* RBTree<T>::insert(T value){
     // creation of a new node
     RBTreeNode<T>* newNode =  new RBTreeNode<T>();
     newNode->data = value;
-    newNode->left = nullptr;
-    newNode->right = nullptr;
-    newNode->parent = nullptr;
 
     RBTreeNode<T>* comparedNode = root;
     RBTreeNode<T>* parentNode = nullptr;
