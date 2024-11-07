@@ -3,6 +3,74 @@
 
 using namespace std;
 
+// Default Constructor
+template <typename T>
+RBTreeNode<T>::RBTreeNode(void){
+    parent = nullptr;
+    left = nullptr;
+    right = nullptr;
+    color = false;
+    data = T();
+}
+
+// Copy Constructor
+// copies node and it's subtree. This does NOT make the selected node essentially a root.
+template <typename T>
+RBTreeNode<T>::RBTreeNode(const RBTreeNode<T> &RBTreeNode){
+    data = RBTreeNode.data;
+    parent = nullptr;
+    color = RBTreeNode.color;
+    // Deep copy of the left subtree recursively
+    if (RBTreeNode.left != nullptr) {
+        left = new RBTreeNode<T>(*RBTreeNode.left);
+        left->parent = this;
+    } else {
+        left = nullptr;
+    }
+    // Deep copy of the right child recursively
+    if (RBTreeNode.right != nullptr) {
+        right = new RBTreeNode<T>(*RBTreeNode.right);
+        right->parent = this;
+    } else {
+        right = nullptr;
+    }
+}
+
+// Destructor
+// kills the naughty node. Took up too much memory so it must perish
+template <typename T>
+RBTreeNode<T>:~RBTreeNode(void){
+    delete left;
+    delete right;
+}
+
+//operator =
+template <typename T>
+RBTreeNode<T>& RBTreeNode<T>::operator=(const RBTreeNode<T> &RBTreeNode){
+    if (this == &RBTreeNode) {
+        return *this;
+    }   
+    delete left;
+    delete right;
+    data = RBTreeNode.data;
+    color = RBTreeNode.color;
+    // Deep copy of the left subtree recursively
+    if (RBTreeNode.left != nullptr) {
+        left = new RBTreeNode<T>(*RBTreeNode.left);
+        left->parent = this;
+    } else {
+        left = nullptr;
+    }
+    // Deep copy of the right child recursively
+    if (RBTreeNode.right != nullptr) {
+        right = new RBTreeNode<T>(*RBTreeNode.right);
+        right->parent = this;
+    } else {
+        right = nullptr;
+    }
+    return *this;
+}
+
 // Find the minimum node in the subtree rooted at this node
 template <typename T>
 RBTreeNode<T>* RBTreeNode<T>::treeMin() {
