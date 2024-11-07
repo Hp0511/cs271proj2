@@ -13,9 +13,11 @@ public:
     RBTreeNode* right;              
     bool color;                     
 
-    // Constructor to initialize a new node
-    RBTreeNode(T value, bool nodeColor = true)
-        : data(value), parent(nullptr), left(nullptr), right(nullptr), color(nodeColor) {}
+    // The 4 default methods
+    RBTreeNode<T> (void);
+    RBTreeNode<T> (const RBTreeNode<T> &RBTreeNode);
+    ~RBTreeNode<T> (void);
+    RBTreeNode<T>& operator=(const BSTNode<T> &RBTreeNode);
 
 
     RBTreeNode<T>*      treeMin();
