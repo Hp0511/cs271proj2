@@ -9,6 +9,8 @@
 #include <iostream>
 #include "BSTNode.cpp"
 #include "BST.cpp"
+#include "RBTreeNode.cpp"
+#include "RBTree.cpp"
 
 using namespace std;
 
@@ -350,6 +352,94 @@ void bst_test_tree_min_max() {
     cout << "TreeMin and TreeMax methods test completed.\n" << endl;
 }
 
+    //==============================================================
+    // Names: Tri Dang
+    // Class: CS 271-01
+    // Project: 2
+    // Date: 11/5/2024
+    // About: Below will be functions to test all the methods for RBTree and RBTreeNode!
+    //==============================================================
+
+    //==============================================================
+    // RBTreeNode TEST for constructor validity
+    //==============================================================
+    void RBTreeNode_default_constructor(){
+        RBTreeNode<int> birthNode;
+        cout << "Testing Default Constructor for RBT Node:" << endl;
+
+        cout << "Root int data: " << birthNode.data << " (Expected: nullptr/0)" << endl;
+        cout << "Left pointer: " << birthNode.left << " (Expected: nullptr/0)" << endl;
+        cout << "Right pointer: " << birthNode.right << " (Expected: nullptr/0)" << endl;
+        cout << "Parent pointer: " << birthNode.parent << " (Expected: nullptr/0)" << endl;
+        cout << "Color (default: red): " << birthNode.color << " (Expected: true/1)" << endl;
+        cout << "Default constructor test completed." << endl << endl;
+        }
+
+    //==============================================================
+    // Building a RBTree with the RBTreeNode constructor for testing! Color will be done manually as RBTreeNode does NOT have recolor fix functionality
+    //==============================================================
+    RBTreeNode<int>* RBTree_construction(){
+        cout << "constructing a Red Black Tree manually..." << endl;
+
+        RBTreeNode<int>* RBTroot = new RBTreeNode<int>(); // constructing root
+        RBTroot->data = 3;
+        RBTroot->color = false; // root is black
+
+        RBTroot->left = new RBTreeNode<int>(); // constructing RED left child
+        RBTroot->left->data = 1;
+        RBTroot->left->parent = RBTroot;
+
+        RBTroot->right = new RBTreeNode<int>(); // constructing RED right child
+        RBTroot->right->data = 7;
+        RBTroot->right->parent = RBTroot;
+
+        RBTroot->left->left = new RBTreeNode<int>(); // constructing BLACK left grandchildren(s)
+        RBTroot->left->right = new RBTreeNode<int>();
+        RBTroot->left->left->data = 0;
+        RBTroot->left->right->data = 2;
+        RBTroot->left->left->color = false;
+        RBTroot->left->right->color = false;
+        RBTroot->left->left->parent = RBTroot->left;
+        RBTroot->left->right->parent = RBTroot->left;
+
+        RBTroot->right->left = new RBTreeNode<int>(); // constructing BLACK right grandchildren(s)
+        RBTroot->right->right = new RBTreeNode<int>();
+        RBTroot->right->left->data = 5;
+        RBTroot->right->right->data = 9;
+        RBTroot->right->left->color = false;
+        RBTroot->right->right->color = false;
+        RBTroot->right->left->parent = RBTroot->right;
+        RBTroot->right->right->parent = RBTroot->right;
+
+        cout << "Red Black Tree construction completed!" << endl << endl;
+        return (RBTroot);
+    }
+
+    //==============================================================
+    // RBTreeNode Traversals: Pre order
+    //==============================================================
+    void RBTree_preorder(RBTreeNode<int>* RBTroot){
+        cout << "initiating pre order traversal..." << endl;
+        RBTroot->printPreOrderTraversal();
+        cout << endl << "Completed!" << endl << "Expected output: 3 1 0 2 7 5 9" << endl << endl;
+    }
+    //==============================================================
+    // RBTreeNode Traversals: In order
+    //==============================================================
+    void RBTree_inorder(RBTreeNode<int>* RBTroot){
+        cout << "initiating in order traversal..." << endl;
+        RBTroot->printInOrderTraversal();
+        cout << endl << "Completed!" << endl << "Expected output: 0 1 2 3 5 7 9" << endl << endl;
+    }
+    //==============================================================
+    // RBTreeNode Traversals: Postorder
+    //==============================================================
+    void RBTree_postorder(RBTreeNode<int>* RBTroot){
+        cout << "initiating post order traversal..." << endl;
+        RBTroot->printPostOrderTraversal();
+        cout << endl << "Completed!" << endl << "Expected output: 0 2 1 5 9 7 3" << endl << endl;
+    }
+
 //==============================================================
 // Main function to run all tests
 //==============================================================
@@ -379,5 +469,13 @@ int main() {
     bst_test_tree_min_max();
 
     cout <<endl<<endl<< "All BST tests completed successfully." << endl;
+
+    cout << "==============================" << endl << "Initiating RBTree testing below." << endl << "==============================" << endl << endl;
+    RBTreeNode_default_constructor();
+    RBTreeNode<int>* RBTroot = RBTree_construction();
+    RBTree_preorder(RBTroot);
+    RBTree_inorder(RBTroot);
+    RBTree_postorder(RBTroot);
+
     return 0;
 }
