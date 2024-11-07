@@ -8,7 +8,7 @@ template <typename T>
 class RBTree {
 private:
     RBTreeNode<T>* root;
-    long size;
+    long nodeCount;
 
     void        transplant(RBTreeNode<T>* oldNode, RBTreeNode<T>* newNode);
     void        leftRotation(RBTreeNode<T>* centerNode); // NOT part of assignment (helper function)
@@ -26,9 +26,10 @@ public:
     // copy constructor
     RBTree<T>           ( const RBTree<T> &RBTree );
     // destructor
+    void deleteSubTree(RBTreeNode<T>* node);
     ~RBTree<T>          ();
     // operator = 
-    RBTree<T>&          operator=(const RBTree<T>& RbTree);
+    RBTree<T>&          operator=(const RBTree<T>& RBTree);
 
     // Public methods
     bool                isEmpty()       const;
