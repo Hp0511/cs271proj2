@@ -1,7 +1,13 @@
 //==============================================================
-// Names: Huy Phan
-// Class: CS 271-01
-// Date:9/20/2024
+// Names: Huy Phan, Andrew Nguyen, Tri Dang
+// Class: CS 271
+// Project: 2
+// Date: 11/5/2024
+// About: This file is the implementation file of the BSTNode class. It includes
+// definition for finding the minimum and maximum nodes in a subtree, 
+// performing tree traversals (pre-order, in-order, and post-order),
+// and managing node memory with default, copy constructors, destructors, 
+// and an assignment operator.
 //==============================================================
 
 #include <iostream>
@@ -12,15 +18,15 @@
 using namespace std;
 
 //==============================================================
-// default constructor
-// Huy Phan
-// Set value to 0
-// Set left pointer to nullptr
-// Set right pointer to nullptr
-// PARAMETERS:
-// none
-// RETURN VALUE:
-// none. but create a new BST Node
+// Default Constructor
+// Author: Huy Phan
+// Description: Initializes a new instance of the BST class. This
+// constructor sets the root pointer to nullptr,
+// effectively creating an empty binary search tree. 
+// It also initializes the node count to 0, indicating 
+// that the tree has no nodes at creation.
+// Parameters: None
+// Return Value: None
 //==============================================================
 template <typename T>
     BST<T>::BST    ( void )
@@ -31,12 +37,13 @@ template <typename T>
 
 
 //==============================================================
-// copy constructor
-// Huy Phan
-// creates a new BST Node that is a deep copy 
-// of the passed-in BST Node by copying elements 
-// PARAMETERS: list
-// RETURN VALUE: none
+// Copy Constructor
+// Author: Huy Phan
+// Description: Constructs a new instance of the BST class as a 
+//              deep copy of an existing BST object. 
+// Parameters: bst - A constant reference to the 
+// BST instance to be copied.
+// Return Value: None
 //==============================================================
 template <typename T>
     BST<T>::BST    ( const BST<T> &bst )
@@ -51,33 +58,54 @@ template <typename T>
     }
 }
 
+
+//==============================================================
+// Function: deleteSubTree
+// Author: Huy Phan
+// Description: Recursively deletes all nodes in the subtree rooted 
+//              at the specified node. 
+// Parameters:
+//    node - Pointer to the root node of the subtree to be deleted.
+// Return Value: None
+//==============================================================
 template <typename T>
-void BST<T>::deleteSubTree(BSTNode<T>* node) {
-    if (node == nullptr) {
-        return; // Base case: If the node is null, do nothing.
+    void BST<T>::deleteSubTree(BSTNode<T>* node) {
+        if (node == nullptr) {
+            return; 
+        }
+
+        // First, delete the left and right children.
+        deleteSubTree(node->left);
+        deleteSubTree(node->right);
+
+        // Then, delete the current node.
+        delete node;
     }
-
-    // First, delete the left and right children.
-    deleteSubTree(node->left);
-    deleteSubTree(node->right);
-
-    // Then, delete the current node.
-    delete node;
-}
-
-// Destructor for BST that calls the helper function.
-template <typename T>
-BST<T>::~BST() {
-    deleteSubTree(root); // Delete all nodes starting from the root.
-    root = nullptr;      // Set root to nullptr to prevent dangling pointer issues.
-}
 
 
 //==============================================================
-// assignment operator
-// Huy Phan
-// PARAMETERS: bstNode
-// RETURN VALUE: none
+// Destructor
+// Author: Huy Phan
+// Description: Destructor for the BST class. Ensures all memory
+//              allocated for nodes within the tree is properly freed.
+// Return Value: None
+//==============================================================
+template <typename T>
+    BST<T>::~BST() {
+        deleteSubTree(root); // Delete all nodes starting from the root.
+        root = nullptr;      // Set root to nullptr to prevent dangling pointer issues.
+    }
+
+
+//==============================================================
+// Operator: Assignment
+// Author: Huy Phan
+// Description: Overloads the assignment operator to assign the content of one BST to another, 
+//              ensuring a deep copy with proper memory management.
+// Parameters:
+//    bst - A constant reference to the BST instance to assign from.
+// Return Value:
+//    A reference to this instance of BST after assignment.
 //==============================================================
 template <typename T>
     BST<T>& BST<T>::operator=( const BST<T> &bst)
@@ -100,10 +128,14 @@ template <typename T>
 
 
 //==============================================================
-// transplant method
-// Huy Phan
-// PARAMETERS: list
-// RETURN VALUE: none
+// Function: transplant
+// Author: Huy Phan
+// Description: Replaces one subtree with another within the tree, updating parent 
+//              pointers to maintain the BST properties.
+// Parameters:
+//    oldNode - Pointer to the node being replaced.
+//    newNode - Pointer to the node that will replace the old node.
+// Return Value: None
 //==============================================================
 template <typename T>
     void BST<T>::transplant(BSTNode<T>* oldNode, BSTNode<T>* newNode)
@@ -126,10 +158,11 @@ template <typename T>
 
 
 //==============================================================
-// size
-// Huy Phan
-// PARAMETERS: list
-// RETURN VALUE: number of nodes in the tree
+// Function: size
+// Author: Huy Phan
+// Description: Returns the number of nodes currently in the BST.
+// Parameters: None
+// Return Value: The number of nodes in the tree, represented as a long integer.
 //==============================================================
 template <typename T>
     long BST<T>::size() const
@@ -139,10 +172,11 @@ template <typename T>
 
 
 //==============================================================
-// isEmpty
-// Huy Phan
-// PARAMETERS: list
-// RETURN VALUE: number of nodes in the tree
+// Function: isEmpty
+// Author: Huy Phan
+// Description: Checks whether the binary search tree is empty.
+// Parameters: None
+// Return Value: Returns true if the tree is empty (i.e., contains no nodes), false otherwise.
 //==============================================================
 template <typename T>
     bool BST<T>::isEmpty() const
@@ -152,10 +186,12 @@ template <typename T>
 
 
 //==============================================================
-// Insert method
-// Huy Phan
-// PARAMETERS: value - The value to be inserted into the BST
-// RETURN VALUE: a pointer to the inserted node
+// Function: insert
+// Author: Huy Phan
+// Description: Inserts a new node with the given value into the binary search tree, maintaining BST properties.
+// Parameters:
+//    value - The value to be inserted into the tree.
+// Return Value: A pointer to the newly inserted node.
 //==============================================================
 template <typename T>
 BSTNode<T>* BST<T>::insert(T value) {
@@ -206,10 +242,12 @@ BSTNode<T>* BST<T>::insert(T value) {
 
 
 //==============================================================
-// Remove method
-// Huy Phan
-// PARAMETERS: value - The value to remove from the BST
-// RETURN VALUE: none
+// Function: remove
+// Author: Huy Phan
+// Description: Removes a node with the specified value from the binary search tree, adjusting the tree to maintain BST properties.
+// Parameters:
+//    value - The value of the node to be removed from the tree.
+// Return Value: None
 //==============================================================
 template <typename T>
 void BST<T>::remove(T value) {
@@ -263,10 +301,13 @@ void BST<T>::remove(T value) {
 
 
 //==============================================================
-// Search method
-// Huy Phan
-// PARAMETERS: list
-// RETURN VALUE: a pointer to the inserted node 
+// Function: search
+// Author: Huy Phan
+// Description: Searches for and returns the node containing the specified value within the binary search tree; 
+//              throws an exception if the value is not found.
+// Parameters:
+//    value - The value to search for in the tree.
+// Return Value: A pointer to the BSTNode containing the specified value if found.
 //==============================================================
 template <typename T>
     BSTNode<T>* BST<T>::search(T value) const
@@ -290,10 +331,12 @@ template <typename T>
 
 
 //==============================================================
-// TreeMin method
-// Huy Phan
-// PARAMETERS: list
-// RETURN VALUE: a pointer to the inserted node 
+// Function: treeMin
+// Author: Huy Phan
+// Description: Returns the node with the minimum value in the binary search tree by traversing 
+//              down the leftmost path from the root; returns nullptr if the tree is empty.
+// Parameters: None
+// Return Value: A pointer to the BSTNode with the smallest value in the tree, or nullptr if the tree is empty.
 //==============================================================
 template <typename T>
 BSTNode<T>* BST<T>::treeMin() const {
@@ -311,12 +354,13 @@ BSTNode<T>* BST<T>::treeMin() const {
 }
 
 
-
 //==============================================================
-// TreeMax method
-// Huy Phan
-// PARAMETERS: list
-// RETURN VALUE: a pointer to the inserted node 
+// Function: treeMax
+// Author: Huy Phan
+// Description: Returns the node with the maximum value in the binary search tree by traversing 
+//              down the rightmost path from the root; returns nullptr if the tree is empty.
+// Parameters: None
+// Return Value: A pointer to the BSTNode with the largest value in the tree, or nullptr if the tree is empty.
 //==============================================================
 template <typename T>
 BSTNode<T>* BST<T>::treeMax() const {
@@ -335,10 +379,12 @@ BSTNode<T>* BST<T>::treeMax() const {
 
 
 //==============================================================
-// printPreOrderTraversal
-// Huy Phan
-// PARAMETERS: BSTNode
-// RETURN VALUE: none
+// Function: printPreOrderTraversal
+// Author: Huy Phan
+// Description: Performs and prints a pre-order traversal of the binary search tree, 
+//              starting from the root; throws an exception if the tree is empty.
+// Parameters: None
+// Return Value: None, but prints the traversal output to standard output.
 //==============================================================
 template <typename T>
     void BST<T>::printPreOrderTraversal() const
@@ -353,10 +399,13 @@ template <typename T>
 
 
 //==============================================================
-// printInOrderTraversal
-// Huy Phan
-// PARAMETERS: BSTNode
-// RETURN VALUE: none
+// Function: printInOrderTraversal
+// Author: Huy Phan
+// Description: Performs and prints an in-order traversal of the binary search tree,
+//              which effectively displays the tree's elements in ascending order;
+//              throws an exception if the tree is empty.
+// Parameters: None
+// Return Value: None, but prints the traversal output to standard output.
 //==============================================================
 template <typename T>
     void BST<T>::printInOrderTraversal() const
@@ -369,11 +418,15 @@ template <typename T>
     }
 }
 
+
 //==============================================================
-// printPostOrderTraversal
-// Huy Phan
-// PARAMETERS: BSTNode
-// RETURN VALUE: none
+// Function: printPostOrderTraversal
+// Author: Huy Phan
+// Description: Performs and prints a post-order traversal of the binary search tree,
+//              which visits the left subtree, the right subtree, and then the node itself;
+//              throws an exception if the tree is empty.
+// Parameters: None
+// Return Value: None, but prints the traversal output to standard output.
 //==============================================================
 template <typename T>
     void BST<T>::printPostOrderTraversal() const

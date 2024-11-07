@@ -2,7 +2,13 @@
 // Names: Huy Phan, Andrew Nguyen, Tri Dang
 // Class: CS 271
 // Project: 2
-// Date: 11/3/2024
+// Date: 11/5/2024
+// About: This file is the header file of the BSTNode class, a template for nodes
+// in a Binary Search Tree (BST). It includes methods for
+// finding the minimum and maximum nodes in a subtree, 
+// performing tree traversals (pre-order, in-order, and post-order),
+// and managing node memory with default, copy constructors, destructors, 
+// and an assignment operator.
 //==============================================================
 #include <iostream>
 using namespace std;
