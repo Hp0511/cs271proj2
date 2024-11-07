@@ -16,20 +16,20 @@ RBTreeNode<T>::RBTreeNode(void){
 // Copy Constructor
 // copies node and it's subtree. This does NOT make the selected node essentially a root.
 template <typename T>
-RBTreeNode<T>::RBTreeNode(const RBTreeNode<T> &RBTreeNode){
-    data = RBTreeNode.data;
+RBTreeNode<T>::RBTreeNode(const RBTreeNode<T> &copiedNode){
+    data = copiedNode.data;
     parent = nullptr;
-    color = RBTreeNode.color;
+    color = copiedNode.color;
     // Deep copy of the left subtree recursively
-    if (RBTreeNode.left != nullptr) {
-        left = new RBTreeNode<T>(*RBTreeNode.left);
+    if (copiedNode.left != nullptr) {
+        left = new RBTreeNode<T>(*copiedNode.left);
         left->parent = this;
     } else {
         left = nullptr;
     }
     // Deep copy of the right child recursively
-    if (RBTreeNode.right != nullptr) {
-        right = new RBTreeNode<T>(*RBTreeNode.right);
+    if (copiedNode.right != nullptr) {
+        right = new RBTreeNode<T>(*copiedNode.right);
         right->parent = this;
     } else {
         right = nullptr;
@@ -46,24 +46,24 @@ RBTreeNode<T>::~RBTreeNode(void){
 
 //operator =
 template <typename T>
-RBTreeNode<T>& RBTreeNode<T>::operator=(const RBTreeNode<T> &RBTreeNode){
-    if (this == &RBTreeNode) {
+RBTreeNode<T>& RBTreeNode<T>::operator=(const RBTreeNode<T> &copiedNode){
+    if (this == &copiedNode) {
         return *this;
     }   
     delete left;
     delete right;
-    data = RBTreeNode.data;
-    color = RBTreeNode.color;
+    data = copiedNode.data;
+    color = copiedNode.color;
     // Deep copy of the left subtree recursively
-    if (RBTreeNode.left != nullptr) {
-        left = new RBTreeNode<T>(*RBTreeNode.left);
+    if (copiedNode.left != nullptr) {
+        left = new RBTreeNode<T>(*copiedNode.left);
         left->parent = this;
     } else {
         left = nullptr;
     }
     // Deep copy of the right child recursively
-    if (RBTreeNode.right != nullptr) {
-        right = new RBTreeNode<T>(*RBTreeNode.right);
+    if (copiedNode.right != nullptr) {
+        right = new RBTreeNode<T>(*copiedNode.right);
         right->parent = this;
     } else {
         right = nullptr;
