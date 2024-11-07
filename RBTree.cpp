@@ -252,7 +252,7 @@ RBTreeNode<T>* RBTree<T>::search(T value) const {
 // Tri dang
 template <typename T>
 long RBTree<T>::size() const{
-    return (size);
+    return (nodeCount);
 }
 
 template <typename T>
