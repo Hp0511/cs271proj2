@@ -198,12 +198,34 @@ void bst_test_insert() {
 //==============================================================
 void bst_test_search() {
     cout << "Testing Search Method:" << endl;
+    BST<int> bst0;
+
+    // Insert some values into the tree
+    bst0.insert(10);
+    bst0.insert(5);
+    bst0.insert(15);
+
+    // Test searching for a value that exists
+    try {
+        BSTNode<int>* result = bst0.search(5);
+        cout << "Found value: " << result->value << " (Expected: 5)" << endl;
+    } catch (const ValueNotInTreeException& e) {
+        cout << "Search Exception Caught (Unexpected): " << e.what() << endl;
+    }
+
+    // Test searching for a value that does not exist
+    try {
+        bst0.search(20);  // Value 20 is not in the tree
+        cout << "Error: Value 20 was found, but it should not exist in the tree." << endl;
+    } catch (const ValueNotInTreeException& e) {
+        cout << "Search Exception Caught: " << e.what() << " (Expected)" << endl;
+    }
+
     BST<int> bst;
     bst.insert(10);
     bst.insert(5);
     bst.insert(15);
 
-    
     BSTNode<int>* result = bst.search(5);
     cout << "Found value: " << result->value << " (Expected: 5)" << endl;
 
@@ -251,6 +273,28 @@ void bst_test_remove() {
 //==============================================================
 void bst_test_traversals() {
     cout << "Testing Traversal Methods:" << endl;
+    BST<int> bst0;
+
+    // Check traversal methods for empty tree
+    cout << "Testing traversals on an empty tree (Expected: Should throw exception):" << endl;
+    try {
+        bst0.printPreOrderTraversal();
+    } catch (const EmptyTreeException& e) {
+        cout << "Pre-order Traversal Exception Caught: " << e.what() << endl;
+    }
+
+    try {
+        bst0.printInOrderTraversal();
+    } catch (const EmptyTreeException& e) {
+        cout << "In-order Traversal Exception Caught: " << e.what() << endl;
+    }
+
+    try {
+        bst0.printPostOrderTraversal();
+    } catch (const EmptyTreeException& e) {
+        cout << "Post-order Traversal Exception Caught: " << e.what() << endl;
+    }
+
     BST<int> bst;
     bst.insert(20);
     bst.insert(10);
