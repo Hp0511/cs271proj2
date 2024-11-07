@@ -358,32 +358,14 @@ int main() {
     cout<<"TESTING BSTNODE CLASS" <<endl<<endl;
     // Test default constructor
     bstnode_test_default_constructor();
-
-    // Build the tree
     BSTNode<int>* root = bstnode_build_tree();
-
-    // Test treeMin
     bstnode_test_tree_min(root);
-
-    // Test treeMax
     bstnode_test_tree_max(root);
-
-    // Test Pre-order Traversal
     bstnode_test_preorder_traversal(root);
-
-    // Test In-order Traversal
     bstnode_test_inorder_traversal(root);
-
-    // Test Post-order Traversal
     bstnode_test_postorder_traversal(root);
-
-    // Test Copy Constructor
     bstnode_test_copy_constructor(root);
-
-    // Test Assignment Operator
     bstnode_test_assignment_operator(root);
-
-    // Test Self-assignment
     bstnode_test_self_assignment(root);
 
     cout << "All BSTNodes tests completed successfully." << endl;
