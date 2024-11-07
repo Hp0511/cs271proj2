@@ -17,7 +17,7 @@ public:
     RBTreeNode<T> (void);
     RBTreeNode<T> (const RBTreeNode<T> &RBTreeNode);
     ~RBTreeNode<T> (void);
-    RBTreeNode<T>& operator=(const BSTNode<T> &RBTreeNode);
+    RBTreeNode<T>& operator=(const RBTreeNode<T> &RBTreeNode);
 
 
     RBTreeNode<T>*      treeMin();
