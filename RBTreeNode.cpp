@@ -9,7 +9,7 @@ RBTreeNode<T>::RBTreeNode(void){
     parent = nullptr;
     left = nullptr;
     right = nullptr;
-    color = false;
+    color = true; // new inserted nodes must be red
     data = T();
 }
 
