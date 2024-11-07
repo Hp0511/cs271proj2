@@ -12,6 +12,12 @@ BSTNode.o: BSTNode.cpp BSTNode.hpp
 BST.o: BST.cpp BST.hpp BSTNode.hpp customexceptions.hpp
 	g++ -c BST.cpp -o BST.o
 
+RBTreeNode.o: RBTreeNode.cpp RBTreeNode.hpp
+	g++ -c RBTreeNode.cpp -o RBTreeNode.o
+
+RBTree.o: RBTree.cpp RBTree.hpp RBtreeNode.hpp customexceptions.hpp
+	g++ -c RBTree.cpp -o RBTree.o
+
 # Cleaning all object files and executable
 clean:
 	rm -f *.o mytests
