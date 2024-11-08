@@ -4,7 +4,11 @@
 
 using namespace std;
 
-// Exception for when attempting an operation on an empty tree
+//==============================================================
+// Empty Tree Exception
+// Author: Huy Phan
+// Description: An error which is called when the tree is empty
+//==============================================================
 class EmptyTreeException : public exception {
 public:
     const char* what() const noexcept override {
@@ -12,7 +16,12 @@ public:
     }
 };
 
-// Exception for when a specific value is not found in the tree
+//==============================================================
+// Value not in tree
+// Author: Huy Phan
+// Description: An error which is called when the search cannot 
+// find the value
+//==============================================================
 class ValueNotInTreeException : public exception {
 public:
     const char* what() const noexcept override {
