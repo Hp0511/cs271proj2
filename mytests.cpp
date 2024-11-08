@@ -415,6 +415,21 @@ void bst_test_tree_min_max() {
         return (RBTroot);
     }
 
+
+    //==============================================================
+    // RBTreeNode operator=
+    //==============================================================
+    void RBTreeNode_operator_equal(RBTreeNode<int>* RBTroot){
+
+    }
+
+    //==============================================================
+    // RBTreeNode copy constructor
+    //==============================================================
+    void RBTreeNode_copy_constructor(RBTreeNode<int>* RBTroot){
+
+    }
+
     //==============================================================
     // RBTreeNode Traversals: Pre order
     //==============================================================
@@ -439,6 +454,62 @@ void bst_test_tree_min_max() {
         RBTroot->printPostOrderTraversal();
         cout << endl << "Completed!" << endl << "Expected output: 0 2 1 5 9 7 3" << endl << endl;
     }
+    //==============================================================
+    // Test TreeMax Method
+    //==============================================================
+    void RBTreeNode_treeMax(RBTreeNode<int>* RBTroot){
+        cout << "Finding the maximum..." << endl;
+        RBTreeNode<int>* maxima = RBTroot->treeMax();
+        cout << "Maximum: " << maxima->data << " (Expected Output: 9)"<< endl << endl;
+    }
+
+    //==============================================================
+    // Test TreeMin Method
+    //==============================================================
+    void RBTreeNode_treeMin(RBTreeNode<int>* RBTroot){
+        cout << "Finding the minimum..." << endl;
+        RBTreeNode<int>* minima = RBTroot->treeMin();
+        cout << "Minimum: " << minima->data << " (Expected outcome: 0)" << endl << endl;
+    }
+
+    //==============================================================
+    // RBTree Testing Below:
+    //==============================================================
+
+    //==============================================================
+    // Test construction
+    //==============================================================
+    void RBTree_test_constructor(){
+        cout << "Constructing a RBTree..." << endl;
+        RBTree<int> RBTree;
+        cout << "Is tree empty: " << RBTree.isEmpty() << " (Expected Output: True)" << endl;
+        cout << "Tree successfully constructed!" << endl << endl;
+    }
+
+    //==============================================================
+    // Testing insertion (tree will be the basis of all other testing)
+    //==============================================================
+    void RBTree_test_insertions(){
+        cout << "Making a new RBTree through insertion... " << endl;
+        RBTree<int> RBTreeptr;
+        cout<<"Test"<<endl;
+        RBTreeptr.insert(10);
+        cout<<"Test"<<endl;
+        RBTreeptr.insert(5);
+        cout<<"Test"<<endl;
+        RBTreeptr.insert(15);
+        cout<<"Test"<<endl;
+        RBTreeptr.insert(0);
+        cout<<"Test"<<endl;
+        RBTreeptr.insert(20);
+        
+        cout << "Placeholdeer" << endl;
+
+        cout << "Size of tree: " << RBTreeptr.size() << " (Expected: 5)" << endl;
+        cout << "Insertion completed!" << endl;
+    }
+
+
 
 //==============================================================
 // Main function to run all tests
@@ -476,6 +547,11 @@ int main() {
     RBTree_preorder(RBTroot);
     RBTree_inorder(RBTroot);
     RBTree_postorder(RBTroot);
+    RBTreeNode_treeMax(RBTroot);
+    RBTreeNode_treeMin(RBTroot);
 
+    cout << "TESTING RBTree FUNCTIONALITIES" << endl << endl;
+    RBTree_test_constructor();
+    RBTree_test_insertions();
     return 0;
 }

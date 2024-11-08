@@ -6,7 +6,7 @@
 
 template <typename T>
 class RBTree {
-private:
+public:
     RBTreeNode<T>* root;
     long nodeCount;
 
@@ -18,8 +18,6 @@ private:
     void        printPreOrderTraversal(RBTreeNode<T>* node)     const;
     void        printInOrderTraversal(RBTreeNode<T>* node)      const;
     void        printPostOrderTraversal(RBTreeNode<T>* node)    const;
-
-public:
     // The 4 default functions:
     // default constructor
     RBTree<T>           (void);
@@ -42,6 +40,7 @@ public:
     void        printPreOrderTraversal() const;
     void        printInOrderTraversal() const;
     void        printPostOrderTraversal() const;
+
 };
 
 #endif

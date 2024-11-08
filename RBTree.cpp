@@ -160,7 +160,9 @@ RBTreeNode<T>* RBTree<T>::insert(T value){
     newNode->left = nullptr;
     newNode->right = nullptr;
     newNode->color = true;
-    insertFixup(newNode); // is it this*?
+
+    insertFixup(newNode);
+
     nodeCount++;
 }
 
@@ -168,43 +170,55 @@ RBTreeNode<T>* RBTree<T>::insert(T value){
 // Tri Dang
 template<typename T>
 void RBTree<T>::insertFixup(RBTreeNode<T>* newNode){
-    while(newNode->parent->color == true){
-        if (newNode->parent == newNode->parent->parent->left){ // Z's newNode grandparent a left child?
-            RBTreeNode<T>* uncle = newNode->parent->parent->right;
-            if (uncle->color == true){ // case 1
-                newNode->parent->color = false;
-                uncle->color = false;
-                newNode->parent->parent->color = true;
-                newNode = newNode->parent->parent;
-            } else{
-                if (newNode == newNode->parent->right){ // case 2
-                    newNode = newNode->parent;
-                    leftRotation(newNode->parent->parent);
+
+        Node* parent = nullptr;
+        Node* grandparent = nullptr;
+        while (node != root && node->color == RED
+               && node->parent->color == RED) {
+            parent = node->parent;
+            grandparent = parent->parent;
+            if (parent == grandparent->left) {
+                Node* uncle = grandparent->right;
+                if (uncle != nullptr
+                    && uncle->color == RED) {
+                    grandparent->color = RED;
+                    parent->color = BLACK;
+                    uncle->color = BLACK;
+                    node = grandparent;
                 }
-                // case 3
-                newNode->parent->color = false;
-                newNode->parent->parent->color = true;
-                rightRotation(newNode->parent->parent);
-            }
-        } else{ // newNode's grandparent MUST be a right child
-                RBTreeNode<T>* uncle = newNode->parent->parent->left;
-                if (uncle->color == true){ // case 1
-                    newNode->parent->color = false;
-                    uncle->color = false;
-                    newNode->parent->parent->color = true;
-                    newNode = newNode->parent->parent;
-                } else{
-                    if (newNode == newNode->parent->left){ // case 2
-                        newNode = newNode->parent;
-                        rightRotation(newNode);
+                else {
+                    if (node == parent->right) {
+                        rotateLeft(parent);
+                        node = parent;
+                        parent = node->parent;
                     }
-                    // case 3
-                    newNode->parent->color = false;
-                    newNode->parent->parent->color = true;
-                    leftRotation(newNode->parent->parent);
+                    rotateRight(grandparent);
+                    swap(parent->color, grandparent->color);
+                    node = parent;
                 }
+            }
+            else {
+                Node* uncle = grandparent->left;
+                if (uncle != nullptr
+                    && uncle->color == RED) {
+                    grandparent->color = RED;
+                    parent->color = BLACK;
+                    uncle->color = BLACK;
+                    node = grandparent;
+                }
+                else {
+                    if (node == parent->left) {
+                        rotateRight(parent);
+                        node = parent;
+                        parent = node->parent;
+                    }
+                    rotateLeft(grandparent);
+                    swap(parent->color, grandparent->color);
+                    node = parent;
+                }
+            }
         }
-    root->color = false;
+        root->color = BLACK;
     }
 }
 
