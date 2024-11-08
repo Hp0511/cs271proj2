@@ -15,9 +15,6 @@ public:
     void        rightRotation(RBTreeNode<T>* centerNode); // NOT part of assignment (helper function)
     void        insertFixup(RBTreeNode<T>* node);
     void        removeFixup(RBTreeNode<T>* node);
-    void        printPreOrderTraversal(RBTreeNode<T>* node)     const;
-    void        printInOrderTraversal(RBTreeNode<T>* node)      const;
-    void        printPostOrderTraversal(RBTreeNode<T>* node)    const;
     // The 4 default functions:
     // default constructor
     RBTree<T>           (void);

@@ -492,23 +492,85 @@ void bst_test_tree_min_max() {
     void RBTree_test_insertions(){
         cout << "Making a new RBTree through insertion... " << endl;
         RBTree<int> RBTreeptr;
-        cout<<"Test"<<endl;
         RBTreeptr.insert(10);
-        cout<<"Test"<<endl;
         RBTreeptr.insert(5);
-        cout<<"Test"<<endl;
         RBTreeptr.insert(15);
-        cout<<"Test"<<endl;
         RBTreeptr.insert(0);
-        cout<<"Test"<<endl;
         RBTreeptr.insert(20);
         
-        cout << "Placeholdeer" << endl;
 
         cout << "Size of tree: " << RBTreeptr.size() << " (Expected: 5)" << endl;
         cout << "Insertion completed!" << endl;
     }
 
+
+
+    //==============================================================
+    // Testing deletion
+    //==============================================================
+    void RBTree_test_deletion(){
+        cout << "Making a new RBTree through insertion... " << endl;
+        RBTree<int> RBTreeptr;
+        RBTreeptr.insert(10);
+        RBTreeptr.insert(5);
+        RBTreeptr.insert(15);
+        RBTreeptr.insert(0);
+        RBTreeptr.insert(20);
+
+        RBTreeptr.remove(5);
+
+        cout << "Size of tree: " << RBTreeptr.size() << " (Expected: 4)" << endl;
+        cout << "Deletion completed!" << endl;
+    }
+
+    //==============================================================
+    // Testing search
+    //==============================================================
+    void RBTree_test_search(){
+        cout << "Searching 5 in the tree." << endl;
+        RBTree<int> RBTreeptr;
+        RBTreeptr.insert(10);
+        RBTreeptr.insert(5);
+        RBTreeptr.insert(15);
+        RBTreeptr.insert(0);
+        RBTreeptr.insert(20);
+        
+        RBTreeNode<int>* queried = RBTreeptr.search(5);
+        
+        cout << "Searching 5: " << queried->data << " (Expected Output: 5)" << endl;
+    }
+
+    //==============================================================
+    // Testing minimum
+    //==============================================================
+    void RBTree_test_min(){
+        cout << "Looking for the minimum node..." << endl;
+        RBTree<int> RBTreeptr;
+        RBTreeptr.insert(10);
+        RBTreeptr.insert(5);
+        RBTreeptr.insert(15);
+        RBTreeptr.insert(0);
+        RBTreeptr.insert(20);
+
+        RBTreeNode<int>* minimum = RBTreeptr.treeMin();
+        cout << "The minimum: " << minimum->data << " (Expected Output 0)" << endl;
+    }
+
+    //==============================================================
+    // Testing maximum
+    //==============================================================
+    void RBTree_test_max(){
+        cout << "Looking for the maximum node..." << endl;
+        RBTree<int> RBTreeptr;
+        RBTreeptr.insert(10);
+        RBTreeptr.insert(5);
+        RBTreeptr.insert(15);
+        RBTreeptr.insert(0);
+        RBTreeptr.insert(20);
+
+        RBTreeNode<int>* maximum = RBTreeptr.treeMax();
+        cout << "The minimum: " << maximum->data << " (Expected Output 20)" << endl;
+    }
 
 
 //==============================================================
@@ -553,5 +615,9 @@ int main() {
     cout << "TESTING RBTree FUNCTIONALITIES" << endl << endl;
     RBTree_test_constructor();
     RBTree_test_insertions();
+    RBTree_test_deletion();
+    RBTree_test_search();
+    RBTree_test_min();
+    RBTree_test_max();
     return 0;
 }

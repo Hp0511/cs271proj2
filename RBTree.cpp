@@ -46,7 +46,6 @@ void RBTree<T>::deleteSubTree(RBTreeNode<T>* node) {
 template <typename T>
 RBTree<T>::~RBTree() {
     deleteSubTree(root); 
-    root = nullptr; 
 }
 
 // Assignment operator
@@ -55,7 +54,7 @@ RBTree<T>& RBTree<T>::operator=(const RBTree<T>& RBTree) {
     if (this == &RBTree){
         return *this;
     }
-    delete root;
+    deleteSubTree (root);
     nodeCount = 0;
     root = nullptr;
     
@@ -131,95 +130,106 @@ void RBTree<T>::rightRotation(RBTreeNode<T>* centerNode) {
     centerNode->parent = sideNode;
 }
 
-// Insertion
-// Tri Dang
+//==============================================================
+// insert
+// Author: Tri Dang
+// Description: Inserts a new value into the RBTree, maintaining red-black properties.
+// Parameters: T value - The value to insert.
+// Return Value: RBTreeNode<T>* - Pointer to the inserted node.
+//==============================================================
 template<typename T>
-RBTreeNode<T>* RBTree<T>::insert(T value){
-    // creation of a new node
-    RBTreeNode<T>* newNode =  new RBTreeNode<T>();
+RBTreeNode<T>* RBTree<T>::insert(T value) {
+    // Create a new node with the specified value
+    RBTreeNode<T>* newNode = new RBTreeNode<T>();
     newNode->data = value;
+    newNode->color = true;  // New nodes are red by default
 
-    RBTreeNode<T>* comparedNode = root;
     RBTreeNode<T>* parentNode = nullptr;
-    while (comparedNode != nullptr){
+    RBTreeNode<T>* comparedNode = root;
+
+    // Traverse the tree to find the insertion point
+    while (comparedNode != nullptr) {
         parentNode = comparedNode;
-        if (newNode->data < comparedNode->data){
+        if (newNode->data < comparedNode->data) {
             comparedNode = comparedNode->left;
-        } else{
+        } else {
             comparedNode = comparedNode->right;
         }
     }
+
+    // Set the parent of the new node and update pointers
     newNode->parent = parentNode;
-    if (parentNode == nullptr){
-        root = newNode;
-    } else if(newNode->data < parentNode->data){
+    if (parentNode == nullptr) {
+        root = newNode;  // Tree was empty; new node becomes root
+    } else if (newNode->data < parentNode->data) {
         parentNode->left = newNode;
-    } else{
+    } else {
         parentNode->right = newNode;
     }
+
+    // Initialize children pointers
     newNode->left = nullptr;
     newNode->right = nullptr;
-    newNode->color = true;
 
+    // Fix red-black properties after insertion
     insertFixup(newNode);
-
-    nodeCount++;
+    nodeCount++;  // Increment node count
+    return(newNode);
 }
 
-// Fixing tree after insertion
-// Tri Dang
+//==============================================================
+// insertFixup
+// Author: Tri Dang
+// Description: Fixes red-black properties after insertion.
+// Parameters: RBTreeNode<T>* newNode - The newly inserted node that may violate properties.
+// Return Value: None
+//==============================================================
 template<typename T>
-void RBTree<T>::insertFixup(RBTreeNode<T>* newNode){
+void RBTree<T>::insertFixup(RBTreeNode<T>* newNode) {
+    while (newNode != root && newNode->parent->color == true) {
+        if (newNode->parent == newNode->parent->parent->left) {  // Parent is left child of grandparent
+            RBTreeNode<T>* uncle = newNode->parent->parent->right;
 
-        Node* parent = nullptr;
-        Node* grandparent = nullptr;
-        while (node != root && node->color == RED
-               && node->parent->color == RED) {
-            parent = node->parent;
-            grandparent = parent->parent;
-            if (parent == grandparent->left) {
-                Node* uncle = grandparent->right;
-                if (uncle != nullptr
-                    && uncle->color == RED) {
-                    grandparent->color = RED;
-                    parent->color = BLACK;
-                    uncle->color = BLACK;
-                    node = grandparent;
+            // Case 1
+            if (uncle != nullptr && uncle->color == true) {
+                newNode->parent->color = false;
+                uncle->color = false;
+                newNode->parent->parent->color = true;
+                newNode = newNode->parent->parent;
+            } else {
+                // Case 2
+                if (newNode == newNode->parent->right) {
+                    newNode = newNode->parent;
+                    leftRotation(newNode);
                 }
-                else {
-                    if (node == parent->right) {
-                        rotateLeft(parent);
-                        node = parent;
-                        parent = node->parent;
-                    }
-                    rotateRight(grandparent);
-                    swap(parent->color, grandparent->color);
-                    node = parent;
-                }
+                // Case 3
+                newNode->parent->color = false;
+                newNode->parent->parent->color = true;
+                rightRotation(newNode->parent->parent);
             }
-            else {
-                Node* uncle = grandparent->left;
-                if (uncle != nullptr
-                    && uncle->color == RED) {
-                    grandparent->color = RED;
-                    parent->color = BLACK;
-                    uncle->color = BLACK;
-                    node = grandparent;
+        } else {  // Parent is right child of grandparent
+            RBTreeNode<T>* uncle = newNode->parent->parent->left;
+
+            // Case 1
+            if (uncle != nullptr && uncle->color == true) {
+                newNode->parent->color = false;
+                uncle->color = false;
+                newNode->parent->parent->color = true;
+                newNode = newNode->parent->parent;
+            } else {
+                // Case 2
+                if (newNode == newNode->parent->left) {
+                    newNode = newNode->parent;
+                    rightRotation(newNode);
                 }
-                else {
-                    if (node == parent->left) {
-                        rotateRight(parent);
-                        node = parent;
-                        parent = node->parent;
-                    }
-                    rotateLeft(grandparent);
-                    swap(parent->color, grandparent->color);
-                    node = parent;
-                }
+                // Case 3
+                newNode->parent->color = false;
+                newNode->parent->parent->color = true;
+                leftRotation(newNode->parent->parent);
             }
         }
-        root->color = BLACK;
     }
+    root->color = false;  // Ensure root is always black
 }
 
 // treeMin - find minimun value of tree
@@ -229,17 +239,31 @@ RBTreeNode<T>* RBTree<T>::treeMin() const {
     if (root == nullptr) {
         return nullptr;
     }
-    return root->treeMin();
+
+    RBTreeNode<T>* ptr = root;
+
+    while (ptr->left != nullptr) {
+        ptr = ptr->left;
+    }
+
+    return ptr;
 }   
 
 // treeMax- find maximun value of tree
 // Andrew
 template <typename T>
 RBTreeNode<T>* RBTree<T>::treeMax() const {
-    if (root == nullptr) {
+     if (root == nullptr) {
         return nullptr;
     }
-    return root->treeMax();
+
+    RBTreeNode<T>* ptr = root;
+
+    while (ptr->right != nullptr) {
+        ptr = ptr->right;
+    }
+
+    return ptr;
 }
 
 // Search - return the pointer of the value being searched
@@ -248,7 +272,7 @@ template <typename T>
 RBTreeNode<T>* RBTree<T>::search(T value) const {
     RBTreeNode<T>* node = root;
     while (node != nullptr) {
-        if (node->value == value) {
+        if (node->data == value) {
             return node;
         } if (node->data <= value) {
             node = node->right;
@@ -256,7 +280,7 @@ RBTreeNode<T>* RBTree<T>::search(T value) const {
             node = node->left;
         }
     }
-    return nullptr;
+    throw ValueNotInTreeException();
 }
 
 // Size function
@@ -288,7 +312,7 @@ void RBTree<T>::remove(T value) {
         x = z->left;
         transplant(z, z->left);
     } else {
-        y = treeMin(z->right);
+        y = z->right->treeMin();
         yOriginalColor = y->color;
         x = y->right;
         if (y->parent == z) {
@@ -307,7 +331,7 @@ void RBTree<T>::remove(T value) {
         }
     delete z;
     if (yOriginalColor == false) {
-        fixDelete(x);
+        removeFixup(x);
     }
     nodeCount--;
 }
@@ -378,4 +402,37 @@ void RBTree<T>::removeFixup(RBTreeNode<T>* node){
             }
         }
     node->color = false;
+}
+
+template <typename T>
+void RBTree<T>::printPreOrderTraversal() const
+{
+    if(root != nullptr){
+        root -> printPreOrderTraversal();
+    }
+    else{
+        throw EmptyTreeException();
+    }
+}
+
+template <typename T>
+void RBTree<T>::printInOrderTraversal() const
+{
+    if(root != nullptr){
+        root -> printInOrderTraversal();
+    }
+    else{
+        throw EmptyTreeException();
+    }
+}
+
+template <typename T>
+void RBTree<T>::printPostOrderTraversal() const
+{
+    if(root != nullptr){
+        root -> printPostOrderTraversal();
+    }
+    else{
+        throw EmptyTreeException();
+    }
 }

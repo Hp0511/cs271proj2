@@ -40,8 +40,6 @@ RBTreeNode<T>::RBTreeNode(const RBTreeNode<T> &copiedNode){
 // kills the naughty node. Took up too much memory so it must perish
 template <typename T>
 RBTreeNode<T>::~RBTreeNode(void){
-    delete left;
-    delete right;
 }
 
 //operator =
