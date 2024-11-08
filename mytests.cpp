@@ -11,6 +11,10 @@
 #include "BST.cpp"
 #include "RBTreeNode.cpp"
 #include "RBTree.cpp"
+long BSTfailures = 0;
+long BSTsuccesses = 0;
+long RBsuccesses = 0;
+long RBfailures = 0;
 
 using namespace std;
 
@@ -55,7 +59,7 @@ BSTNode<int>* bstnode_build_tree() {
     root->left->right->parent = root->left;  // Set parent of the left-right child
 
     cout << "Tree built successfully." << endl;
-    return root;
+    return(root);
 }
 
 //==============================================================
@@ -416,19 +420,26 @@ void bst_test_tree_min_max() {
     }
 
 
-    //==============================================================
-    // RBTreeNode operator=
-    //==============================================================
-    void RBTreeNode_operator_equal(RBTreeNode<int>* RBTroot){
+    // //==============================================================
+    // // RBTreeNode operator=
+    // //==============================================================
+    // void RBTreeNode_operator_equal(RBTreeNode<int>* RBTroot){
+    //     cout << "" << endl;
+    //     RBTreeNode<int> copiedTree(*RBTroot);
+    // }
 
-    }
-
-    //==============================================================
-    // RBTreeNode copy constructor
-    //==============================================================
-    void RBTreeNode_copy_constructor(RBTreeNode<int>* RBTroot){
-
-    }
+    // //==============================================================
+    // // RBTreeNode copy constructor
+    // //==============================================================
+    // void RBTreeNode_copy_constructor(RBTreeNode<int>* RBTroot){
+    //     cout << "Initializing Copy constructor for RBTReeNode..." << endl;
+    //     RBTreeNode<int> copiedRBNode(*RBTroot);
+    //     cout << "In order Traversal for the tree being copied: " << endl;
+    //     cout << RBTroot->printInOrderTraversal();
+    //     cout << "In order Traversal for the copied tree: " << endl;
+    //     cout << copiedRBNode->printInOrderTraversal << endl;
+    //     cout << "Copy Constructor finished!" << endl;
+    // }
 
     //==============================================================
     // RBTreeNode Traversals: Pre order
@@ -577,7 +588,6 @@ void bst_test_tree_min_max() {
 // Main function to run all tests
 //==============================================================
 int main() {
-
     cout<<"TESTING BSTNODE CLASS" <<endl<<endl;
     // Test default constructor
     bstnode_test_default_constructor();
@@ -601,6 +611,8 @@ int main() {
     bst_test_traversals();
     bst_test_tree_min_max();
 
+    cout << "Passed Test: " << BSTsuccesses << endl;
+    cout << "Failed Test" << BSTfailures << endl;
     cout <<endl<<endl<< "All BST tests completed successfully." << endl;
 
     cout << "==============================" << endl << "Initiating RBTree testing below." << endl << "==============================" << endl << endl;
@@ -611,6 +623,7 @@ int main() {
     RBTree_postorder(RBTroot);
     RBTreeNode_treeMax(RBTroot);
     RBTreeNode_treeMin(RBTroot);
+    //RBTreeNode_copy_constructor(RBTroot);
 
     cout << "TESTING RBTree FUNCTIONALITIES" << endl << endl;
     RBTree_test_constructor();
