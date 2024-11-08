@@ -1,3 +1,10 @@
+//==============================================================
+// Names: Huy Phan
+// Class: CS 271
+// Project: 2
+// Date: 11/5/2024
+// About: This file contains the implementations for the custom exceptions.
+//==============================================================
 #include <iostream>
 #include <exception>
 #pragma once

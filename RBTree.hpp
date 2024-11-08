@@ -1,3 +1,10 @@
+//==============================================================
+// Names: Huy Phan, Andrew Nguyen, Tri Dang
+// Class: CS 271
+// Project: 2
+// Date: 11/5/2024
+// About: This file contains the declarations for the RBTree class methods.
+//==============================================================
 #ifndef RBTREE_HPP
 #define RBTREE_HPP
 

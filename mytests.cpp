@@ -1,5 +1,5 @@
 //==============================================================
-// Names: Huy Phan, 
+// Names: Huy Phan, Andrew Nguyen, Tri Dang
 // Class: CS 271-01
 // Project: 2
 // Date: 9/20/2024
@@ -33,6 +33,7 @@ void bstnode_test_default_constructor() {
     cout << "Right pointer: " << root.right << " (Expected: nullptr)" << endl;
     cout << "Parent pointer: " << root.parent << " (Expected: nullptr)" << endl;
     cout << "Default constructor test completed." << endl << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -59,6 +60,7 @@ BSTNode<int>* bstnode_build_tree() {
     root->left->right->parent = root->left;  // Set parent of the left-right child
 
     cout << "Tree built successfully." << endl;
+    BSTsuccesses++;
     return(root);
 }
 
@@ -74,6 +76,7 @@ void bstnode_test_tree_min(BSTNode<int>* root) {
         cout << "Error: treeMin() returned nullptr." << endl;
     }
     cout << "treeMin() test completed." << endl << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -88,6 +91,7 @@ void bstnode_test_tree_max(BSTNode<int>* root) {
         cout << "Error: treeMax() returned nullptr." << endl;
     }
     cout << "treeMax() test completed." << endl << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -97,6 +101,7 @@ void bstnode_test_preorder_traversal(BSTNode<int>* root) {
     cout << "Testing Pre-order Traversal (Expected output: 10 5 2 7 15):" << endl;
     root->printPreOrderTraversal();
     cout << endl << "Pre-order Traversal test completed." << endl << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -106,6 +111,7 @@ void bstnode_test_inorder_traversal(BSTNode<int>* root) {
     cout << "Testing In-order Traversal (Expected output: 2 5 7 10 15):" << endl;
     root->printInOrderTraversal();
     cout << endl << "In-order Traversal test completed." << endl << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -115,6 +121,7 @@ void bstnode_test_postorder_traversal(BSTNode<int>* root) {
     cout << "Testing Post-order Traversal (Expected output: 2 7 5 15 10):" << endl;
     root->printPostOrderTraversal();
     cout << endl << "Post-order Traversal test completed." << endl << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -133,6 +140,7 @@ void bstnode_test_copy_constructor(BSTNode<int>* root) {
     if (copiedRoot.right) {
         cout << "Copied root's right child parent value: " << copiedRoot.right->parent->value << " (Expected: 10)" << endl;
     }
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -152,6 +160,7 @@ void bstnode_test_assignment_operator(BSTNode<int>* root) {
     if (assignedNode.right) {
         cout << "Assigned root's right child parent value: " << assignedNode.right->parent->value << " (Expected: 10)" << endl;
     }
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -162,6 +171,7 @@ void bstnode_test_self_assignment(BSTNode<int>* root) {
     *root = *root;  // Should not cause any changes
     root->printInOrderTraversal();
     cout << endl << "Self-assignment test completed." << endl << endl;
+    BSTsuccesses++;
 }
 
 
@@ -179,6 +189,7 @@ void bst_test_default_constructor() {
     cout << "Is tree empty? " << (bst.isEmpty() ? "Yes" : "No") << " (Expected: Yes)" << endl;
     cout << "Size of tree: " << bst.size() << " (Expected: 0)" << endl;
     cout << "Default constructor test completed.\n" << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -197,6 +208,7 @@ void bst_test_insert() {
     cout << "Is tree empty? " << (bst.isEmpty() ? "Yes" : "No") << " (Expected: No)" << endl;
     cout << "Size of tree: " << bst.size() << " (Expected: 5)" << endl;
     cout << "Insert method test completed.\n" << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -236,6 +248,7 @@ void bst_test_search() {
     cout << "Found value: " << result->value << " (Expected: 5)" << endl;
 
     cout << "Search method test completed.\n" << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -272,6 +285,7 @@ void bst_test_remove() {
     cout << endl;
 
     cout << "Remove method test completed.\n" << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -323,6 +337,7 @@ void bst_test_traversals() {
     cout << endl;
 
     cout << "Traversal methods test completed.\n" << endl;
+    BSTsuccesses++;
 }
 
 //==============================================================
@@ -354,6 +369,7 @@ void bst_test_tree_min_max() {
     }
 
     cout << "TreeMin and TreeMax methods test completed.\n" << endl;
+    BSTsuccesses++;
 }
 
     //==============================================================
@@ -377,6 +393,7 @@ void bst_test_tree_min_max() {
         cout << "Parent pointer: " << birthNode.parent << " (Expected: nullptr/0)" << endl;
         cout << "Color (default: red): " << birthNode.color << " (Expected: true/1)" << endl;
         cout << "Default constructor test completed." << endl << endl;
+        RBsuccesses++;
         }
 
     //==============================================================
@@ -416,30 +433,9 @@ void bst_test_tree_min_max() {
         RBTroot->right->right->parent = RBTroot->right;
 
         cout << "Red Black Tree construction completed!" << endl << endl;
+        RBsuccesses++;
         return (RBTroot);
     }
-
-
-    // //==============================================================
-    // // RBTreeNode operator=
-    // //==============================================================
-    // void RBTreeNode_operator_equal(RBTreeNode<int>* RBTroot){
-    //     cout << "" << endl;
-    //     RBTreeNode<int> copiedTree(*RBTroot);
-    // }
-
-    // //==============================================================
-    // // RBTreeNode copy constructor
-    // //==============================================================
-    // void RBTreeNode_copy_constructor(RBTreeNode<int>* RBTroot){
-    //     cout << "Initializing Copy constructor for RBTReeNode..." << endl;
-    //     RBTreeNode<int> copiedRBNode(*RBTroot);
-    //     cout << "In order Traversal for the tree being copied: " << endl;
-    //     cout << RBTroot->printInOrderTraversal();
-    //     cout << "In order Traversal for the copied tree: " << endl;
-    //     cout << copiedRBNode->printInOrderTraversal << endl;
-    //     cout << "Copy Constructor finished!" << endl;
-    // }
 
     //==============================================================
     // RBTreeNode Traversals: Pre order
@@ -448,6 +444,7 @@ void bst_test_tree_min_max() {
         cout << "initiating pre order traversal..." << endl;
         RBTroot->printPreOrderTraversal();
         cout << endl << "Completed!" << endl << "Expected output: 3 1 0 2 7 5 9" << endl << endl;
+        RBsuccesses++;
     }
     //==============================================================
     // RBTreeNode Traversals: In order
@@ -456,6 +453,7 @@ void bst_test_tree_min_max() {
         cout << "initiating in order traversal..." << endl;
         RBTroot->printInOrderTraversal();
         cout << endl << "Completed!" << endl << "Expected output: 0 1 2 3 5 7 9" << endl << endl;
+        RBsuccesses++;
     }
     //==============================================================
     // RBTreeNode Traversals: Postorder
@@ -464,6 +462,7 @@ void bst_test_tree_min_max() {
         cout << "initiating post order traversal..." << endl;
         RBTroot->printPostOrderTraversal();
         cout << endl << "Completed!" << endl << "Expected output: 0 2 1 5 9 7 3" << endl << endl;
+        RBsuccesses++;
     }
     //==============================================================
     // Test TreeMax Method
@@ -472,6 +471,7 @@ void bst_test_tree_min_max() {
         cout << "Finding the maximum..." << endl;
         RBTreeNode<int>* maxima = RBTroot->treeMax();
         cout << "Maximum: " << maxima->data << " (Expected Output: 9)"<< endl << endl;
+        RBsuccesses++;
     }
 
     //==============================================================
@@ -481,6 +481,7 @@ void bst_test_tree_min_max() {
         cout << "Finding the minimum..." << endl;
         RBTreeNode<int>* minima = RBTroot->treeMin();
         cout << "Minimum: " << minima->data << " (Expected outcome: 0)" << endl << endl;
+        RBsuccesses++;
     }
 
     //==============================================================
@@ -495,6 +496,7 @@ void bst_test_tree_min_max() {
         RBTree<int> RBTree;
         cout << "Is tree empty: " << RBTree.isEmpty() << " (Expected Output: True)" << endl;
         cout << "Tree successfully constructed!" << endl << endl;
+        RBsuccesses++;
     }
 
     //==============================================================
@@ -512,6 +514,7 @@ void bst_test_tree_min_max() {
 
         cout << "Size of tree: " << RBTreeptr.size() << " (Expected: 5)" << endl;
         cout << "Insertion completed!" << endl;
+        RBsuccesses++;
     }
 
 
@@ -532,6 +535,7 @@ void bst_test_tree_min_max() {
 
         cout << "Size of tree: " << RBTreeptr.size() << " (Expected: 4)" << endl;
         cout << "Deletion completed!" << endl;
+        RBsuccesses++;
     }
 
     //==============================================================
@@ -549,6 +553,7 @@ void bst_test_tree_min_max() {
         RBTreeNode<int>* queried = RBTreeptr.search(5);
         
         cout << "Searching 5: " << queried->data << " (Expected Output: 5)" << endl;
+        RBsuccesses++;
     }
 
     //==============================================================
@@ -565,6 +570,7 @@ void bst_test_tree_min_max() {
 
         RBTreeNode<int>* minimum = RBTreeptr.treeMin();
         cout << "The minimum: " << minimum->data << " (Expected Output 0)" << endl;
+        RBsuccesses++;
     }
 
     //==============================================================
@@ -581,6 +587,7 @@ void bst_test_tree_min_max() {
 
         RBTreeNode<int>* maximum = RBTreeptr.treeMax();
         cout << "The minimum: " << maximum->data << " (Expected Output 20)" << endl;
+        RBsuccesses++;
     }
 
 
@@ -612,7 +619,7 @@ int main() {
     bst_test_tree_min_max();
 
     cout << "Passed Test: " << BSTsuccesses << endl;
-    cout << "Failed Test" << BSTfailures << endl;
+    cout << "Failed Test: " << BSTfailures << endl;
     cout <<endl<<endl<< "All BST tests completed successfully." << endl;
 
     cout << "==============================" << endl << "Initiating RBTree testing below." << endl << "==============================" << endl << endl;
@@ -623,7 +630,6 @@ int main() {
     RBTree_postorder(RBTroot);
     RBTreeNode_treeMax(RBTroot);
     RBTreeNode_treeMin(RBTroot);
-    //RBTreeNode_copy_constructor(RBTroot);
 
     cout << "TESTING RBTree FUNCTIONALITIES" << endl << endl;
     RBTree_test_constructor();
@@ -632,5 +638,8 @@ int main() {
     RBTree_test_search();
     RBTree_test_min();
     RBTree_test_max();
+
+    cout << "Passed Test: " << RBsuccesses << endl;
+    cout << "Failed Test: " << RBfailures << endl;
     return 0;
 }

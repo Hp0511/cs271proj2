@@ -3,6 +3,7 @@
 // Class: CS 271
 // Project: 2
 // Date: 11/3/2024
+// Description: this file contains declarations for the BST class methods.
 //==============================================================
 #include <iostream>
 #include "BSTNode.hpp"

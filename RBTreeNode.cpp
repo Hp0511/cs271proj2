@@ -1,9 +1,27 @@
+//==============================================================
+// Names: Huy Phan, Andrew Nguyen, Tri Dang
+// Class: CS 271
+// Project: 2
+// Date: 11/5/2024
+// This file contains the implementation of the RBTreeNode class,
+// including the default and copy constructors, assignment operator,
+// destructor, and tree traversal methods (preorder, inorder, postorder).
+// It also includes functions to find the minimum and maximum nodes in the tree.
+// The class supports efficient insertions, deletions, and searches in a Red-Black Tree.
+//==============================================================
+
 #include "RBTreeNode.hpp"
 #include <iostream>
 
 using namespace std;
 
-// Default Constructor
+//==============================================================
+// Default constructor
+// Author: Tri Dang
+// Description: create a new node for the RBT
+// Parameters: None
+// Return Value: None
+//==============================================================
 template <typename T>
 RBTreeNode<T>::RBTreeNode(void){
     parent = nullptr;
@@ -13,8 +31,13 @@ RBTreeNode<T>::RBTreeNode(void){
     data = T();
 }
 
-// Copy Constructor
-// copies node and it's subtree. This does NOT make the selected node essentially a root.
+//==============================================================
+// Copy constructor
+// Author: Tri Dang
+// Description: deep copy of the RBT at specified node
+// Parameters: None
+// Return Value: None
+//==============================================================
 template <typename T>
 RBTreeNode<T>::RBTreeNode(const RBTreeNode<T> &copiedNode){
     data = copiedNode.data;
@@ -36,13 +59,24 @@ RBTreeNode<T>::RBTreeNode(const RBTreeNode<T> &copiedNode){
     }
 }
 
+//==============================================================
 // Destructor
-// kills the naughty node. Took up too much memory so it must perish
+// Author: Tri Dang
+// Description: delete a node
+// Parameters: None
+// Return Value: None
+//==============================================================
 template <typename T>
 RBTreeNode<T>::~RBTreeNode(void){
 }
 
-//operator =
+//==============================================================
+// Operator =
+// Author: Tri Dang
+// Description: assignment operator
+// Parameters: None
+// Return Value: None
+//==============================================================
 template <typename T>
 RBTreeNode<T>& RBTreeNode<T>::operator=(const RBTreeNode<T> &copiedNode){
     if (this == &copiedNode) {
@@ -69,7 +103,15 @@ RBTreeNode<T>& RBTreeNode<T>::operator=(const RBTreeNode<T> &copiedNode){
     return *this;
 }
 
-// Find the minimum node in the subtree rooted at this node
+//==============================================================
+// treeMin
+// Author: Andrew Nguyen
+// Description: locate the node with the smallest value by moving
+//              to the left-most node on the left subtree of the
+//.             current node.
+// Parameters: None
+// Return Value: node which value is the smallest in the tree
+//==============================================================
 template <typename T>
 RBTreeNode<T>* RBTreeNode<T>::treeMin() {
     RBTreeNode<T>* current = this;
@@ -79,7 +121,15 @@ RBTreeNode<T>* RBTreeNode<T>::treeMin() {
     return current;
 }
 
-// Find the maximum node in the subtree rooted at this node
+//==============================================================
+// treeMax
+// Author: Andrew Nguyen
+// Description: locate the node with the largest value by moving
+//              to the right-most node on the right subtree of the
+//.             current node.
+// Parameters: None
+// Return Value: node which value is the largest in the tree
+//==============================================================
 template <typename T>
 RBTreeNode<T>* RBTreeNode<T>::treeMax() {
     RBTreeNode<T>* current = this;
@@ -89,7 +139,14 @@ RBTreeNode<T>* RBTreeNode<T>::treeMax() {
     return current;
 }
 
-// Print preorder traversal of the subtree rooted at this node
+//==============================================================
+// printPreOrderTraversal()
+// Author: Andrew Nguyen
+// Description: helper function to print the pre order traversal
+//              of the nodes' value.
+// Parameters: None
+// Return Value: None
+//==============================================================
 template <typename T>
 void RBTreeNode<T>::printPreOrderTraversal() const {
     cout << data << " "; // Visit the root node
@@ -101,7 +158,14 @@ void RBTreeNode<T>::printPreOrderTraversal() const {
     }
 }
 
-// Print inorder traversal of the subtree rooted at this node
+//==============================================================
+// printInOrderTraversal()
+// Author: Andrew Nguyen
+// Description: helper function to print the in order traversal
+//              of the nodes' value.
+// Parameters: None
+// Return Value: None
+//==============================================================
 template <typename T>
 void RBTreeNode<T>::printInOrderTraversal() const {
     if (left != nullptr) {
@@ -113,7 +177,14 @@ void RBTreeNode<T>::printInOrderTraversal() const {
     }
 }
 
-// Print postorder traversal of the subtree rooted at this node
+//==============================================================
+// printPostOrderTraversal()
+// Author: Andrew Nguyen
+// Description: helper function to print the post order traversal
+//              of the nodes' value.
+// Parameters: None
+// Return Value: None
+//==============================================================
 template <typename T>
 void RBTreeNode<T>::printPostOrderTraversal() const {
     if (left != nullptr) {
